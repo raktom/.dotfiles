@@ -1,0 +1,83 @@
+##############################################################################
+#  ~/.inputrc                                                                #
+##############################################################################
+#                                                                            #
+#  Readline-library init-config file                                         #
+#  ------------------------------------------------------------------------  #
+#  Author: Tomasz Rak                                                        #
+#                                                                            #
+##############################################################################
+
+# source this file with bash command:
+# bind -f ~/.inputrc
+#"\C-xr":re-read-init-file
+
+# get some goodies from system-wide settings
+$include /etc/inputrc
+
+# in emacs mode 
+# use C-a C-e C-f C-b M-f M-b C-]-ch M-C-]-ch in line moving
+# and C-k C-u C-d C-h M-C-h M-d for killing
+# C-y yank whats killed M-. yank last arg M-NR M-. or any
+# M-u M-l M-c for case changing
+# M-# to comment out line
+# M-NR(or-NR) as numeric arg befor next command
+# C-r to search history (best with fzf)
+"\C-p":history-search-backward
+"\C-n":history-search-forward
+"\ek":history-search-backward
+"\ej":history-search-forward
+# move in line vi-like with h and l
+"\eh":backward-char
+"\el":forward-char
+# esc then dd deletes line
+"\edd":kill-whole-line
+"@@":vi-editing-mode
+
+# to substitute command into oth command
+"\e\C-m":'\C-a "$(\C-e)"\C-a'
+# to choose by fzf from prev command criteria
+"\e/":'"$(!!|fzf)"\C-a \C-m\C-m'
+# Alt+x to jump to target dir of prev command
+"\ex":'cd !$ \C-m ls \C-m' 
+
+$if mode=vi
+    set keymap vi-command
+    "gg":beginning-of-history
+    "G":end-of-history
+    "@@":emacs-editing-mode
+    set keymap vi-insert
+    "ii":vi-movement-mode # remap escape
+    "\C-p":history-search-backward
+    "\C-l":clear-screen
+    "@@":emacs-editing-mode
+$endif
+
+#set keyseq-timeout 100
+set completion-ignore-case On
+# color the common prefix
+set colored-completion-prefix On
+# color the common prefix in menu-compl
+set menu-complete-display-prefix On
+# common prefix>3 replaced by ellipsis
+#set completion-prefix-display-length 3
+# symlink with slash appended
+set mark-symlinked-directories On
+# single Tab ist enough and no bell
+set show-all-if-ambiguous On
+set show-all-if-unmodified On
+# like ls -F
+set visible-stats On
+set colored-stats On
+set bell-style visible
+# visual mark of mode in prompt
+set emacs-mode-string @_
+set vi-cmd-mode-string c_
+set vi-ins-mode-string i_
+set show-mode-in-prompt On
+
+# 8bit stuff
+set meta-flag On
+set input-meta On
+set output-meta On
+set convert-meta Off
