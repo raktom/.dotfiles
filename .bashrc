@@ -198,7 +198,6 @@ alias gitdf="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
 eval "$(starship init bash)"
 export EDITOR='vi'
 export VISUAL='vi'
-export YT_API_KEY="AIzaSyDNIFjQ9YNQUWGdMFk8yVgtkTrD9dLLNtY"
 
 #xmodmap ~/.speedswapper
 stty -ixon # disable ctr-s and ctr-q.
