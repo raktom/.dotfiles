@@ -201,7 +201,7 @@ export VISUAL='vi'
 
 #xmodmap ~/.speedswapper
 stty -ixon # disable ctr-s and ctr-q.
-tmux a
+#tmux a
 echo -e "Hey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
 l
 
