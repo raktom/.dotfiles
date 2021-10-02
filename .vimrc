@@ -12,7 +12,16 @@ syntax enable
 filetype plugin indent on
 set spelllang=en,pl,de
 set updatetime=500
+set termguicolors
+packadd! dracula
+colorscheme dracula
 set laststatus=2
+set noshowmode
+set splitright
+set splitbelow
+set colorcolumn=80
+set cursorline
+set nohlsearch
 set errorbells
 set visualbell
 set belloff=esc
@@ -25,6 +34,10 @@ set noexpandtab
 set ignorecase smartcase
 set scrolloff=3
 set wildignorecase
+set noswapfile
+set nobackup
+set undofile
+
 
 let g:lightline = {
       \ 'colorscheme': 'wombat',
