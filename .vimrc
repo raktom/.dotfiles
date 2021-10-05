@@ -30,8 +30,6 @@ set hidden
 set mouse=a
 set backspace=indent,eol,start
 set shiftwidth=4 tabstop=4 
-set noexpandtab
-set ignorecase smartcase
 set scrolloff=3
 set wildignorecase
 set noswapfile
@@ -115,14 +113,36 @@ inoremap <C-k> <Up>
 inoremap <C-j> <Down>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
-nmap <c-s> :w<CR> :echo " File saved! "<cr>
-vmap <c-s> <Esc><c-s>gv
-imap <c-s> <Esc><c-s> :echo " File saved! "<cr>
-
+inoremap <C-s>     <C-O>:update<cr>
+nnoremap <C-s>     :update<cr>
+nnoremap <leader>s :update<cr>
+nnoremap <leader>w :update<cr>
+"nmap <C-s> :w<CR> :echo " File saved! "<cr>
+"map <C-s> <Esc><C"s>gv
+"map <C-s> <Esc><c-s> :echo " File saved! "<cr>
 
 iabbrev @@ raktom0@gmail.com
 iabbrev ccopy Copyright 2021 Tomasz Rak, all rights reserve.
 iab data <c-r>=strftime('%Y-%m-%d')<cr>
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+
+" PLUGINS with Plug
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'ryanoasis/vim-devicons'
+Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'dracula/vim'
+Plug 'morhetz/gruvbox'
+call plug#end()
 
 source /usr/share/doc/fzf/examples/fzf.vim
 
