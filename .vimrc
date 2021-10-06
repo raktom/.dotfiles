@@ -13,8 +13,6 @@ filetype plugin indent on
 set spelllang=en,pl,de
 set updatetime=500
 set termguicolors
-packadd! dracula
-colorscheme dracula
 set laststatus=2
 set noshowmode
 set splitright
@@ -59,8 +57,8 @@ augroup numbertoggle
 augroup END
 let mapleader = ","
 let maplocalleader = "\\"
-highlight NonText ctermfg=DarkGray guifg=#4a4a59
-highlight SpecialKey ctermfg=DarkGray guifg=#4a4a59
+highlight NonText ctermfg=Black guifg=#000000 
+highlight SpecialKey ctermfg=Black guifg=#000000 
 set listchars=tab:\|\ ,space:·,nbsp:␣,trail:•,eol:¬,precedes:«,extends:»
 set list
 
@@ -140,9 +138,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'dracula/vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'morhetz/gruvbox'
+Plug 'tomasr/molokai'
+Plug 'sonph/onehalf', { 'rtp': 'vim' }
 call plug#end()
 
+colorscheme dracula
 source /usr/share/doc/fzf/examples/fzf.vim
 
