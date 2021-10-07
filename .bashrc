@@ -175,7 +175,7 @@ alias rm='rm -iv'
 alias mount='mount | column -t'
 alias update='sudo apt update; sudo apt upgrade -y'
 alias free='free -hwt'
-alias df='df -hT --total'
+alias df='df -hT -x squashfs -x tmpfs -x devtmpfs --total'
 alias rsync='rsync --progress'
 alias in='sudo inxi -Fmrxx'
 alias yt='youtube-dl --add-metadata -i'
@@ -184,8 +184,9 @@ alias bat='batcat'
 alias ed="ed -v --prompt='Im simple ED: '"
 alias v='nvim'
 alias z='zathura'
-alias myoip='curl ipinfo.io/ip'
-alias myip="ip -4 -br a | grep UP | awk '{print $3}' | cut -f1 -d'/'"
+alias extip='curl ipinfo.io/ip'
+alias ip="ip -4 -br a | grep UP | awk '{print $3}' | cut -f1 -d'/'"
+alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -"
 alias ports='netstat -tulanp'
 alias untar='tar -zxvf'
 # to automaticly connect to tmux-ses on thinkpad
@@ -198,6 +199,7 @@ alias gitdf="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
 eval "$(starship init bash)"
 export EDITOR='vi'
 export VISUAL='vi'
+export FZF_DEFAULT_OPTS="--height=50% --layout=reverse --info=inline --multi --border"
 
 #xmodmap ~/.speedswapper
 stty -ixon # disable ctr-s and ctr-q.
