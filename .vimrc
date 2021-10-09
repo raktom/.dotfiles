@@ -8,6 +8,7 @@
 "#                                                                           #
 "#############################################################################
 
+set nocompatible
 syntax enable
 filetype plugin indent on
 set spelllang=en,pl,de
@@ -18,6 +19,7 @@ set noshowmode
 set splitright
 set splitbelow
 set colorcolumn=80
+let &colorcolumn="80,".join(range(120,999),",")
 set cursorline
 set nohlsearch
 set errorbells
@@ -34,12 +36,17 @@ set noswapfile
 set nobackup
 set undofile
 
-
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'spell', 'filetype', 'charvaluehex' ] ]
+      \ },
+      \ 'component': {
+      \   'charvaluehex': '0x%B'
       \ },
       \ 'component_function': {
       \   'gitbranch': 'FugitiveHead'
@@ -55,13 +62,16 @@ augroup numbertoggle
     autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
     autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
 augroup END
-let mapleader = ","
-let maplocalleader = "\\"
+set listchars=tab:\|\ ,space:·,nbsp:␣,trail:•,eol:¬,precedes:«,extends:»
+"set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+set listchars=tab:→\ ,eol:↲
+set list
+set showbreak=↪
 highlight NonText ctermfg=Black guifg=#000000 
 highlight SpecialKey ctermfg=Black guifg=#000000 
-set listchars=tab:\|\ ,space:·,nbsp:␣,trail:•,eol:¬,precedes:«,extends:»
-set list
 
+let mapleader = ","
+let maplocalleader = "\\"
 " to switch between buffers
 nnoremap <leader><leader> <c-^>
 noremap <leader>y "+y
@@ -71,7 +81,6 @@ nnoremap <leader>sv :source $MYVIMRC<cr> :echo "!! Reloading .vimrc !!"<cr>
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
-
 nnoremap <leader>< viw<esc>a><esc>bi<<esc>lel
 
 nnoremap ; :
@@ -80,7 +89,11 @@ nnoremap j gj
 nnoremap k gk
 noremap! ii <C-c>
 noremap! jk <C-c>
-vnoremap ii <C-c> 
+nmap G Gzz
+nmap n nzz
+nmap N Nzz
+nmap } }zz
+nmap { [zz
 noremap <Space> 10j
 noremap <c-Space> 10k
 nnoremap Y y0$
@@ -125,8 +138,16 @@ iab data <c-r>=strftime('%Y-%m-%d')<cr>
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 
 " PLUGINS with Plug
+"PlugInstall [name ...] [#threads] 	Install plugins
+"PlugUpdate [name ...] [#threads]  	Install or update plugins
+"PlugClean[!]                      	Remove unlisted plugins (bang version will clean without prompt)
+"PlugUpgrade                       	Upgrade vim-plug itself
+"PlugStatus                        	Check the status of plugins
+"PlugDiff                          	Examine changes from the previous update and the pending changes
+"PlugSnapshot[!] [output path]     	Generate script for restoring the current snapshot of the plugins
 if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  \
+  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 call plug#begin('~/.vim/plugged')
