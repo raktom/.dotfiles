@@ -91,9 +91,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 # some more ls aliases
+alias l='ls -F --group-directories-first'
 alias ll='ls -ailFH --color-scale --git --icons --group-directories-first'
 alias la='ls -Fa --group-directories-first'
-alias l='ls -F --group-directories-first'
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -196,17 +196,19 @@ alias h="history | cut -c 8- | sort -u | fzf | tr -d '\n' | xclip -selection c"
 alias graph='git log --all --decorate --oneline --graph'
 alias gitdf="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
 
-eval "$(starship init bash)"
-export EDITOR='vi'
-export VISUAL='vi'
-export FZF_DEFAULT_OPTS="--height=50% --layout=reverse --info=inline --multi --border"
+export EDITOR='nvim'
+export VISUAL='nvim'
+#export FZF_DEFAULT_OPTS="--height=50% --layout=reverse --info=inline --multi --border"
+# F2-to toggle preview F3-batcat F4-editor M-w-toggle wrap C-y-copy to clipboard C-x-to remove C-l- to clear 
+export FZF_DEFAULT_OPTS="--no-mouse --height 50% --reverse --multi --info=inline --preview='$HOME/.vim/plugged/fzf.vim/bin/preview.sh {}' --preview-window='right:60%:wrap' --bind='f2:toggle-preview,f3:execute(batcat --style=numbers {} || less -f {}),f4:execute($EDITOR {}),alt-w:toggle-preview-wrap,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-y:execute-silent(echo {+} | xclip -selection c),ctrl-x:execute(rm -i {+})+abort,ctrl-l:clear-query'"
 
+source /usr/share/doc/fzf/examples/key-bindings.bash
+source /usr/share/doc/fzf/examples/completion.bash
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+eval "$(starship init bash)"
 #xmodmap ~/.speedswapper
 stty -ixon # disable ctr-s and ctr-q.
 #tmux a
 echo -e "Hey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
 l
-
-source /usr/share/doc/fzf/examples/key-bindings.bash
-source /usr/share/doc/fzf/examples/completion.bash
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
