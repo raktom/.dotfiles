@@ -16,9 +16,10 @@ set updatetime=500
 set termguicolors
 set laststatus=2
 set noshowmode
+set showcmd
+set wildmenu
 set splitright
 set splitbelow
-set colorcolumn=80
 let &colorcolumn="80,".join(range(120,999),",")
 set cursorline
 set nohlsearch
@@ -31,6 +32,7 @@ set mouse=a
 set backspace=indent,eol,start
 set shiftwidth=4 tabstop=4 
 set scrolloff=3
+set sidescroll=3
 set wildignorecase
 set noswapfile
 set nobackup
@@ -58,13 +60,13 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6  }  }
 set clipboard=unnamedplus
 set number relativenumber
 augroup numbertoggle
-    autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-    autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
+	autocmd!
+	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+	autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
 augroup END
-set listchars=tab:\|\ ,space:·,nbsp:␣,trail:•,eol:¬,precedes:«,extends:»
-"set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
-set listchars=tab:→\ ,eol:↲
+"set listchars=tab:\|\ ,space:·,nbsp:␣,trail:•,eol:¬,precedes:«,extends:»
+set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮
+"set listchars=tab:→\ ,eol:↲
 set list
 set showbreak=↪
 highlight NonText ctermfg=Black guifg=#000000 
@@ -85,6 +87,8 @@ nnoremap <leader>< viw<esc>a><esc>bi<<esc>lel
 
 nnoremap ; :
 nnoremap : ;
+vnoremap ; :
+vnoremap : ;
 nnoremap j gj
 nnoremap k gk
 noremap! ii <C-c>
@@ -96,7 +100,7 @@ nmap } }zz
 nmap { [zz
 noremap <Space> 10j
 noremap <c-Space> 10k
-nnoremap Y y0$
+nnoremap Y y$
 inoremap <> <><Left>
 inoremap () ()<Left>
 inoremap {} {}<Left>
@@ -137,6 +141,12 @@ iabbrev ccopy Copyright 2021 Tomasz Rak, all rights reserve.
 iab data <c-r>=strftime('%Y-%m-%d')<cr>
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 
+" automatically leave insert mode after 'updatetime' milliseconds of inaction
+au CursorHoldI * stopinsert
+" set 'updatetime' to 5 seconds when in insert mode
+au InsertEnter * let updaterestore=&updatetime | set updatetime=5000
+au InsertLeave * let &updatetime=updaterestore
+
 " PLUGINS with Plug
 "PlugInstall [name ...] [#threads] 	Install plugins
 "PlugUpdate [name ...] [#threads]  	Install or update plugins
@@ -159,10 +169,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'vimwiki/vimwiki'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'morhetz/gruvbox'
 Plug 'tomasr/molokai'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 colorscheme dracula
