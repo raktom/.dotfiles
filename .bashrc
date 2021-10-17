@@ -185,7 +185,7 @@ alias ed="ed -v --prompt='Im simple ED: '"
 alias v='nvim'
 alias z='zathura'
 alias extip='curl ipinfo.io/ip'
-alias ip="ip -4 -br a | grep UP | awk '{print $3}' | cut -f1 -d'/'"
+alias ip="/bin/ip -4 -br a | awk '/UP/{ print $3 }' | cut -f3 | cut -f1 -d'/'"
 alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -"
 alias ports='netstat -tulanp'
 alias untar='tar -zxvf'
