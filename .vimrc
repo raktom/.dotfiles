@@ -97,7 +97,7 @@ nmap G Gzz
 nmap n nzz
 nmap N Nzz
 nmap } }zz
-nmap { [zz
+nmap { {zz
 noremap <Space> 10j
 noremap <c-Space> 10k
 nnoremap Y y$
@@ -114,8 +114,6 @@ nmap <Left>  <Nop>
 nmap <Right> <Nop>
 map $ <Nop>
 map ^ <Nop>
-map { <Nop>
-map } <Nop>
 noremap K     {
 noremap J     }
 noremap H     ^
@@ -143,8 +141,8 @@ let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
 au CursorHoldI * stopinsert
-" set 'updatetime' to 5 seconds when in insert mode
-au InsertEnter * let updaterestore=&updatetime | set updatetime=5000
+" set 'updatetime' to 7 seconds when in insert mode
+au InsertEnter * let updaterestore=&updatetime | set updatetime=7000
 au InsertLeave * let &updatetime=updaterestore
 
 " PLUGINS with Plug
