@@ -21,7 +21,7 @@ $include /etc/inputrc
 # C-y yank whats killed M-. yank last arg M-NR M-. or any
 # M-u M-l M-c for case changing
 # M-# to comment out line
-# M-NR(or-NR) as numeric arg befor next command
+# M-NR(or-NR) as numeric arg before next command
 # C-r to search history (best with fzf)
 "\C-p":history-search-backward
 "\C-n":history-search-forward
@@ -34,12 +34,14 @@ $include /etc/inputrc
 "\edd":kill-whole-line
 "@@":vi-editing-mode
 
-# to substitute command into oth command
+# M-<enter> -substitute curr-command into oth command
 "\e\C-m":'\C-a "$(\C-e)"\C-a'
-# to choose by fzf from prev command criteria
+# M-' -put whole line into double quotes
+"\e'":'\C-a "\C-e"\C-a'
+# M-/ -for curr-command choose (by fzf) arg from output of prev-comm 
 "\e/":'"$(!!|fzf)"\C-a \C-m\C-m'
-# Alt+x to jump to target dir of prev command
-"\ex":'cd !$ \C-m ls \C-m' 
+# M-x -jump into dir of prev-command
+"\ex":'cd !$' 
 
 $if mode=vi
     set keymap vi-command
