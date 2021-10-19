@@ -72,7 +72,8 @@ set showbreak=↪
 highlight NonText ctermfg=Black guifg=#000000 
 highlight SpecialKey ctermfg=Black guifg=#000000 
 
-let mapleader = ","
+" default mapleader \ could be changed to space or ,
+let mapleader = "," 
 let maplocalleader = "\\"
 " to switch between buffers
 nnoremap <leader><leader> <c-^>
@@ -89,6 +90,8 @@ nnoremap ; :
 nnoremap : ;
 vnoremap ; :
 vnoremap : ;
+nnoremap ' `
+nnoremap ` '
 nnoremap j gj
 nnoremap k gk
 noremap! ii <C-c>
@@ -134,9 +137,10 @@ nnoremap <leader>w :update<cr>
 "map <C-s> <Esc><C"s>gv
 "map <C-s> <Esc><c-s> :echo " File saved! "<cr>
 
+iab #! #!/bin/bash
 iabbrev @@ raktom0@gmail.com
 iabbrev ccopy Copyright 2021 Tomasz Rak, all rights reserve.
-iab data <c-r>=strftime('%Y-%m-%d')<cr>
+iab date <c-r>=strftime('%Y-%m-%d')<cr>
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
