@@ -11,14 +11,20 @@ Environment:
 - scripts
  
  To clone into new machine:
- ```
-git clone --separate-git-dir=~/.dotfiles.git https://github.com/raktom/.dotfiles.git ~
-alias gitdf='/usr/bin/git --git-dir=$HOME/.dotfiles.git --work-tree=$HOME'
-gitdf config --local status.showUntrackedFiles no
-gitdf checkout
- ```
- If config files are already present we can first backup them:
+
 ```
-mkdir -p .dotfiles-backup && gitdf checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | \
-xargs -I{} mv {} .dotfiles-backup/{}
+git clone --bare https://github.com/raktom/.dotfiles.git $HOME/.dotfiles.git
+function gitdf {
+   /usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME $@
+}
+mkdir -p .dotfiles-backup
+gitdf checkout
+if [ $? = 0 ]; then
+  echo "Checked out config.";
+  else
+    echo "Backing up pre-existing dot files.";
+    gitdf checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .dotfiles-backup/{}
+fi;
+gitdf checkout
+gitdf config status.showUntrackedFiles no
 ```
