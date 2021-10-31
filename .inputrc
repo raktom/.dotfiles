@@ -32,7 +32,8 @@ $include /etc/inputrc
 "\el":forward-char
 # esc then dd deletes line
 "\edd":kill-whole-line
-"@@":vi-editing-mode
+# C-vi to change to vi-mode
+"\C-v\C-i":vi-editing-mode
 
 # M-<enter> -substitute curr-command into oth command
 "\e\C-m":'\C-a "$(\C-e)"\C-a'
@@ -73,9 +74,9 @@ set visible-stats On
 set colored-stats On
 set bell-style visible
 # visual mark of mode in prompt
-set emacs-mode-string @_
-set vi-cmd-mode-string c_
-set vi-ins-mode-string i_
+set emacs-mode-string \033[1;30m@\033[m
+set vi-cmd-mode-string \033[1;30mc\033[m
+set vi-ins-mode-string \033[1;30mi\033[m
 set show-mode-in-prompt On
 
 # 8bit stuff
