@@ -8,35 +8,43 @@
 "#                                                                           #
 "#############################################################################
 
-set nocompatible
+if &compatible
+	set nocompatible
+endif
+set noswapfile
+set nobackup
+set undofile
+set termguicolors
+set mouse=a
 syntax enable
 filetype plugin indent on
 set spelllang=en,pl,de
 set updatetime=500
-set termguicolors
+set title
 set laststatus=2
 set noshowmode
 set showcmd
+set scrolloff=3
+set sidescroll=3
 set wildmenu
+set wildignorecase
 set splitright
 set splitbelow
 let &colorcolumn="80,".join(range(120,999),",")
 set cursorline
 set nohlsearch
+set ignorecase
+set smartcase
 set errorbells
 set visualbell
 set belloff=esc
 set confirm
 set hidden
-set mouse=a
 set backspace=indent,eol,start
 set shiftwidth=4 tabstop=4 
-set scrolloff=3
-set sidescroll=3
-set wildignorecase
-set noswapfile
-set nobackup
-set undofile
+set smarttab
+set showmatch
+set matchpairs+=<:>
 
 let g:lightline = {
       \ 'colorscheme': 'wombat',
