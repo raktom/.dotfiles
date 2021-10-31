@@ -18,7 +18,7 @@ case $- in
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
-HISTCONTROL=ignoreboth:erasedups
+HISTCONTROL="ignoreboth":"erasedups"
 HISTSIZE=1000
 HISTFILESIZE=2000
 # append to the history file, don't overwrite it
@@ -92,7 +92,7 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 # some more ls aliases
 alias l='ls -F --group-directories-first'
-alias ll='ls -ailFH --color-scale --git --icons --group-directories-first'
+alias ll='ls -ailFH --color-scale --icons --group-directories-first'
 alias la='ls -Fa --group-directories-first'
 
 # colored GCC warnings and errors
@@ -202,6 +202,7 @@ export VISUAL='nvim'
 # F2-to toggle preview F3-batcat F4-editor M-w-toggle wrap C-y-copy to clipboard C-x-to remove C-l- to clear 
 export FZF_DEFAULT_OPTS="--no-mouse --height 50% --reverse --multi --info=inline --preview='$HOME/.vim/plugged/fzf.vim/bin/preview.sh {}' --preview-window='right:60%:wrap' --bind='f2:toggle-preview,f3:execute(batcat --style=numbers {} || less -f {}),f4:execute($EDITOR {}),alt-w:toggle-preview-wrap,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-y:execute-silent(echo {+} | xclip -selection c),ctrl-x:execute(rm -i {+})+abort,ctrl-l:clear-query'"
 
+source ~/bin/colors
 source /usr/share/doc/fzf/examples/key-bindings.bash
 source /usr/share/doc/fzf/examples/completion.bash
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
