@@ -194,7 +194,8 @@ alias thinkpad="ssh thinkpad -t tmux a"
 # to put history record into clipboard through fuzzy search
 alias h="history | cut -c 8- | sort -u | fzf | tr -d '\n' | xclip -selection c"
 alias graph='git log --all --decorate --oneline --graph'
-alias gitdf="/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME"
+alias gitdf='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
+alias vdf='GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME v'
 
 export EDITOR='nvim'
 export VISUAL='nvim'
