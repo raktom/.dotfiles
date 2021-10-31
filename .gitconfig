@@ -1,0 +1,13 @@
+[user]
+    name = Tomasz Rak
+    email = raktom0@gmail.com
+    signingkey = raktom0@gmail.com
+[core]
+    editor = nvim
+[commit]
+    gpgsign = true
+[tag]
+    gpgSign = true
+
+[init]
+	defaultBranch = main
