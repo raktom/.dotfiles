@@ -7,12 +7,12 @@ Environment:
 - tmux
 - vim/neovim
 - git
-- fzf
+- fzf/ag
 - scripts
  
  To clone into new machine:
 
-```
+```bash 
 git clone --bare https://github.com/raktom/.dotfiles.git $HOME/.dotfiles.git
 function gitdf {
    /usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME $@
