@@ -1,12 +1,12 @@
-"#############################################################################
-"#  ~/.vimrc                                                                 #
-"#############################################################################
-"#                                                                           #
-"#  VIM init-config file                                                     #
-"#  -----------------------------------------------------------------------  #
-"#  Author: Tomasz Rak                                                       #
-"#                                                                           #
-"#############################################################################
+"##############################################################################
+"#  ~/.vimrc                                                                  #
+"##############################################################################
+"#                                                                            #
+"#  VIM init-config file                                                      #
+"#  ------------------------------------------------------------------------  #
+"#  Author: Tomasz Rak                                                        #
+"#                                                                            #
+"##############################################################################
 
 if &compatible
 	set nocompatible
@@ -18,6 +18,7 @@ set termguicolors
 set mouse=a
 syntax enable
 filetype plugin indent on
+set encoding=UTF-8
 set spelllang=en,pl,de
 set updatetime=500
 set title
@@ -46,6 +47,12 @@ set smarttab
 set showmatch
 set matchpairs+=<:>
 
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+" zoom a vim pane, <C-w>= to re-balance
+nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>= :wincmd =<cr>
+
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -55,16 +62,37 @@ let g:lightline = {
       \              [ 'percent' ],
       \              [ 'fileformat', 'fileencoding', 'spell', 'filetype', 'charvaluehex' ] ]
       \ },
+	  \ 'tabline': {
+      \   'left': [ ['buffers'] ],
+      \   'right': [ ['close'] ]
+      \ },
+      \ 'component_expand': {
+      \   'buffers': 'lightline#bufferline#buffers'
+      \ },
+      \ 'component_type': {
+      \   'buffers': 'tabsel'
+	  \ },
       \ 'component': {
       \   'charvaluehex': '0x%B'
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead'
+      \   'gitbranch': 'FugitiveHead',
+      \   'filetype': 'MyFiletype',
+      \   'fileformat': 'MyFileformat',
       \ },
       \ }
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
+
 set rtp+=~/.fzf
 let g:fzf_preview_window = 'right:50%'
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6  }  }
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6  }  }
+"let g:fzf_buffers_jump = 1
 set clipboard=unnamedplus
 set number relativenumber
 augroup numbertoggle
@@ -80,15 +108,32 @@ set showbreak=↪
 highlight NonText ctermfg=Black guifg=#000000 
 highlight SpecialKey ctermfg=Black guifg=#000000 
 
+execute "set <F20>=\e[13;2u"
+execute "set <F21>=\e[13;5u"
+" Shift-Enter(remapped as <F20>) to start editing new line below without splitting the current one
+" Ctrl-Enter(remapped as <F21>) to start editing new line above
+inoremap <F20> <C-o>o
+inoremap <F21> <C-o>O
 " default mapleader \ could be changed to space or ,
-let mapleader = "," 
+let mapleader = " " 
 let maplocalleader = "\\"
 " to switch between buffers
 nnoremap <leader><leader> <c-^>
+nnoremap <silent> <leader>f :Files<CR>
+nnoremap <silent> <leader>F :Files!<CR>
+cnoremap <silent> <C-p> :History:<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>m :Marks<CR>
+nnoremap <silent> <leader>l :BLines<CR>
+nnoremap <silent> <F1> :Helptags<CR>
+inoremap <silent> <F1> <Esc>:Helptags<CR>
+imap <C-x><C-f> <plug>(fzf-complete-path)
+imap <C-x><C-k> <plug>(fzf-complete-word)
+imap <C-x><C-l> <plug>(fzf-complete-buffer-line)
 noremap <leader>y "+y
 noremap <leader>p "+p
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>sv :source $MYVIMRC<cr> :echo "!! Reloading .vimrc !!"<cr>
+nnoremap <leader>e :vsplit $MYVIMRC<cr>
+nnoremap <leader>r :source $MYVIMRC<cr> :echo "!! Reloading .vimrc !!"<cr>
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
@@ -109,8 +154,8 @@ nmap n nzz
 nmap N Nzz
 nmap } }zz
 nmap { {zz
-noremap <Space> 10j
-noremap <c-Space> 10k
+noremap <C-Space> 10j
+noremap <C-S-Space> 10k
 nnoremap Y y$
 inoremap <> <><Left>
 inoremap () ()<Left>
@@ -141,9 +186,19 @@ inoremap <C-s>     <C-O>:update<cr>
 nnoremap <C-s>     :update<cr>
 nnoremap <leader>s :update<cr>
 nnoremap <leader>w :update<cr>
+nnoremap <leader>q :q<CR>
 "nmap <C-s> :w<CR> :echo " File saved! "<cr>
 "map <C-s> <Esc><C"s>gv
 "map <C-s> <Esc><c-s> :echo " File saved! "<cr>
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-D> <Del>
+cnoremap <C-E> <End>
+cnoremap <C-F> <Right>
+cnoremap <C-N> <Down>
+"cnoremap <C-P> <Up>
+cnoremap <Esc><C-B> <S-Left>
+cnoremap <Esc><C-F> <S-Right>
 
 iab #! #!/bin/bash
 iabbrev @@ raktom0@gmail.com
@@ -156,6 +211,13 @@ au CursorHoldI * stopinsert
 " set 'updatetime' to 7 seconds when in insert mode
 au InsertEnter * let updaterestore=&updatetime | set updatetime=7000
 au InsertLeave * let &updatetime=updaterestore
+
+if &diff
+	let s:is_started_as_vim_diff = 1
+	syntax off
+	setlocal nospell
+	highlight NormalNC guibg=none
+endif
 
 " PLUGINS with Plug
 "PlugInstall [name ...] [#threads] 	Install plugins
@@ -178,16 +240,18 @@ call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'ryanoasis/vim-devicons'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'vimwiki/vimwiki'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'morhetz/gruvbox'
 Plug 'tomasr/molokai'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
+Plug 'EdenEast/nightfox.nvim'
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
@@ -198,6 +262,49 @@ let g:vimwiki_markdown_link_ext = 1
 let g:vimwiki_markpu_syntax = 'markdown'
 let g:markdown_folding = 1
 
-colorscheme dracula
+let g:UltiSnipsExpandTrigger="<tab>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" loading the plugin
+let g:webdevicons_enable = 1
+let g:lightline#bufferline#enable_devicons = 1
+
+
+colorscheme nightfox
+lua << EOF
+local nightfox = require('nightfox')
+
+-- This function set the configuration of nightfox. If a value is not passed in the setup function
+-- it will be taken from the default configuration above
+nightfox.setup({
+  fox = "nightfox", -- change the colorscheme to use nordfox
+  alt_nc = "true",
+  terminal_colors = "true",
+  styles = {
+    comments = "italic", -- change style of comments to be italic
+    keywords = "bold", -- change style of keywords to be bold
+    functions = "italic,bold" -- styles can be a comma separated list
+  },
+  inverse = {
+    match_paren = "true", -- inverse the highlighting of match_parens
+  },
+  colors = {
+    red = "#FF000", -- Override the red color for MAX POWER
+    bg_alt = "#000000",
+  },
+  hlgroups = {
+    TSPunctDelimiter = { fg = "${red}" }, -- Override a highlight group with the color red
+    LspCodeLens = { bg = "#000000", style = "italic" },
+  }
+})
+
+-- Load the configuration set above and apply the colorscheme
+nightfox.load()
+EOF
+
+"highlight Normal ctermfg=145 ctermbg=none guifg=#cdcecf guibg=none " guibg=#192330
+highlight NormalNC guibg=#3d3e4a
+
 source /usr/share/doc/fzf/examples/fzf.vim
 
