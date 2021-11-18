@@ -15,11 +15,12 @@ set noswapfile
 set nobackup
 set undofile
 set termguicolors
+set guifont=CaskaydiaCove\ Nerd\ Font\ 13
+set encoding=UTF-8
+set spelllang=en,pl,de
 set mouse=a
 syntax enable
 filetype plugin indent on
-set encoding=UTF-8
-set spelllang=en,pl,de
 set updatetime=500
 set title
 set laststatus=2
@@ -53,45 +54,6 @@ autocmd VimResized * :wincmd =
 nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
 nnoremap <leader>= :wincmd =<cr>
 
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ],
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'spell', 'filetype', 'charvaluehex' ] ]
-      \ },
-	  \ 'tabline': {
-      \   'left': [ ['buffers'] ],
-      \   'right': [ ['close'] ]
-      \ },
-      \ 'component_expand': {
-      \   'buffers': 'lightline#bufferline#buffers'
-      \ },
-      \ 'component_type': {
-      \   'buffers': 'tabsel'
-	  \ },
-      \ 'component': {
-      \   'charvaluehex': '0x%B'
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \   'filetype': 'MyFiletype',
-      \   'fileformat': 'MyFileformat',
-      \ },
-      \ }
-function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
-endfunction
-
-function! MyFileformat()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
-endfunction
-
-set rtp+=~/.fzf
-let g:fzf_preview_window = 'right:50%'
-let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6  }  }
 "let g:fzf_buffers_jump = 1
 set clipboard=unnamedplus
 set number relativenumber
@@ -117,7 +79,7 @@ inoremap <F21> <C-o>O
 " default mapleader \ could be changed to space or ,
 let mapleader = " " 
 let maplocalleader = "\\"
-" to switch between buffers
+" switch between buffers
 nnoremap <leader><leader> <c-^>
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>F :Files!<CR>
@@ -200,12 +162,17 @@ cnoremap <C-N> <Down>
 cnoremap <Esc><C-B> <S-Left>
 cnoremap <Esc><C-F> <S-Right>
 
+" Abbreviations
 iab #! #!/bin/bash
-iabbrev @@ raktom0@gmail.com
-iabbrev ccopy Copyright 2021 Tomasz Rak, all rights reserve.
+iab @@ raktom0@gmail.com
+iab ccopy Copyright 2021 Tomasz Rak, all rights reserve.
 iab date <c-r>=strftime('%Y-%m-%d')<cr>
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 
+set rtp+=~/.fzf
+let g:fzf_preview_window = 'right:50%'
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6  }  }
+"
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
 au CursorHoldI * stopinsert
 " set 'updatetime' to 7 seconds when in insert mode
@@ -218,6 +185,56 @@ if &diff
 	setlocal nospell
 	highlight NormalNC guibg=none
 endif
+
+let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+" makes vimwiki markdown links as [text](text.md) instead of [text](text)
+let g:vimwiki_markdown_link_ext = 1
+let g:vimwiki_markpu_syntax = 'markdown'
+let g:markdown_folding = 1
+
+let g:UltiSnipsExpandTrigger="<tab>"
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="vertical"
+
+" loading the plugin devicon
+let g:webdevicons_enable = 1
+let g:lightline#bufferline#enable_devicons = 1
+
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'spell', 'filetype', 'charvaluehex' ] ]
+      \ },
+	  \ 'tabline': {
+      \   'left': [ ['buffers'] ],
+      \   'right': [ ['close'] ]
+      \ },
+      \ 'component_expand': {
+      \   'buffers': 'lightline#bufferline#buffers'
+      \ },
+      \ 'component_type': {
+      \   'buffers': 'tabsel'
+	  \ },
+      \ 'component': {
+      \   'charvaluehex': '0x%B'
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead',
+      \   'filetype': 'MyFiletype',
+      \   'fileformat': 'MyFileformat',
+      \ },
+      \ }
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+endfunction
+function! MyFileformat()
+  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+endfunction
 
 " PLUGINS with Plug
 "PlugInstall [name ...] [#threads] 	Install plugins
@@ -255,22 +272,6 @@ Plug 'EdenEast/nightfox.nvim'
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
-let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
-let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
-" makes vimwiki markdown links as [text](text.md) instead of [text](text)
-let g:vimwiki_markdown_link_ext = 1
-let g:vimwiki_markpu_syntax = 'markdown'
-let g:markdown_folding = 1
-
-let g:UltiSnipsExpandTrigger="<tab>"
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
-" loading the plugin
-let g:webdevicons_enable = 1
-let g:lightline#bufferline#enable_devicons = 1
-
-
 colorscheme nightfox
 lua << EOF
 local nightfox = require('nightfox')
@@ -303,8 +304,8 @@ nightfox.setup({
 nightfox.load()
 EOF
 
+" Dimming inactive(NC-not current) vim panes
 "highlight Normal ctermfg=145 ctermbg=none guifg=#cdcecf guibg=none " guibg=#192330
 highlight NormalNC guibg=#3d3e4a
 
 source /usr/share/doc/fzf/examples/fzf.vim
-
