@@ -145,10 +145,16 @@ man() {
 shopt -s autocd # cd without cd
 cd() {
 	if [ -n "$1" ]; then
-		builtin cd "$@" && echo -e "Hey TOMASZ you are here--> \e[1;95m $(pwd)\e[m" && l
+		builtin cd "$@" && echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m" && l
 	else 
-		builtin cd ~ && echo -e "Hey TOMASZ you are here--> \e[1;95m $(pwd)\e[m" && l
+		builtin cd ~ && echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m" && l
 	fi
+}
+# generate random password with given length
+genpasswd() {
+	local l=$1
+       	[ "$l" == "" ] && l=20
+      	tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
 }
 # custom function for new scripts
 newscript() {
@@ -200,8 +206,9 @@ alias vdf='GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME v'
 export EDITOR='nvim'
 export VISUAL='nvim'
 #export FZF_DEFAULT_OPTS="--height=50% --layout=reverse --info=inline --multi --border"
-# F2-to toggle preview F3-batcat F4-editor M-w-toggle wrap C-y-copy to clipboard C-x-to remove C-l- to clear 
-export FZF_DEFAULT_OPTS="--no-mouse --height 50% --reverse --multi --info=inline --preview='$HOME/.vim/plugged/fzf.vim/bin/preview.sh {}' --preview-window='right:60%:wrap:hidden' --bind='f2:toggle-preview,f3:execute(batcat --style=numbers {} || less -f {}),f4:execute($EDITOR {}),alt-w:toggle-preview-wrap,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-y:execute-silent(echo {+} | xclip -selection c),ctrl-x:execute(rm -i {+})+abort,ctrl-l:clear-query'"
+# F2-toggles preview F3-batcat F4-editor M-w-toggle wrap C-y-copy to clipboard C-x-to remove C-l- to clear 
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+export FZF_DEFAULT_OPTS="--no-mouse --height 50% --reverse --multi --info=inline --preview='$HOME/.vim/plugged/fzf.vim/bin/preview.sh {}' --preview-window='right:60%:nowrap:hidden' --bind='f2:toggle-preview,f3:execute(batcat --style=numbers {} || less -f {}),f4:execute($EDITOR {}),alt-w:toggle-preview-wrap,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-y:execute-silent(echo {+} | xclip -selection c),ctrl-x:execute(rm -i {+})+abort,ctrl-l:clear-query'"
 
 source ~/bin/colors
 source /usr/share/doc/fzf/examples/key-bindings.bash
