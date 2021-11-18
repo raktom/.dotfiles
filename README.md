@@ -3,12 +3,21 @@
 My configuration files in bare repository.
 
 Environment:
-- bash/readline-lib
+- gnome/bspwm
+- tilix/urxvt
+- bash & readline-lib
 - tmux
 - vim/neovim
 - git
-- fzf/ag
+- fzf & ag
 - scripts
+
+Tiling wm - bspwm includes:
+- bspwm
+- sxhkd
+- polybar
+- dmenu
+- dunst
  
  To clone into new machine:
 
