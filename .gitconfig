@@ -11,3 +11,11 @@
 
 [init]
 	defaultBranch = main
+[diff]
+	tool = nvim
+	submodule = log
+	algorithm = patience
+	indentHeuristic = true
+[difftool "nvim"]
+	cmd = "nvim -f -d -c \"wincmd l\" -c 'cd \"$GIT_PREFIX\"' \"$LOCAL\" \"$REMOTE\""
+
