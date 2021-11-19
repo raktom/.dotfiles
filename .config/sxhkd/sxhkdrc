@@ -127,19 +127,18 @@ super + alt + shift + {h,j,k,l}
 super + {Left,Down,Up,Right}
 	bsp node -v {-20 0,0 20,0 -20,20 0}
 
-
 	# Screen brightness control
 XF86MonBrightnessDown
     sudo xbacklight -dec 10
 XF86MonBrightnessUp
     sudo xbacklight -inc 10
 # Volume control
-XF86AudioRaiseVolume
-    pamixer -i 10
-XF86AudioLowerVolume
-    pamixer -d 10
-XF86AudioMute
-    pamixer -t
+#XF86AudioRaiseVolume
+#    pamixer -i 10
+#XF86AudioLowerVolume
+#    pamixer -d 10
+#XF86AudioMute
+#    pamixer -t
 # Play/pause
 XF86AudioPlay
     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause 
@@ -148,5 +147,11 @@ XF86AudioNext
     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 XF86AudioPrev
     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
-
-
+	
+#Volume Control
+XF86AudioLowerVolume
+	amixer set Master 5%-
+XF86AudioRaiseVolume
+	amixer set Master 5%+
+XF86AudioMute
+        amixer set Master toggle
