@@ -145,9 +145,9 @@ man() {
 shopt -s autocd # cd without cd
 cd() {
 	if [ -n "$1" ]; then
-		builtin cd "$@" && echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m" && l
+		builtin cd "$@"  && echo && l #&& echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
 	else 
-		builtin cd ~ && echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m" && l
+		builtin cd ~  && echo && l #&& echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
 	fi
 }
 # generate random password with given length
@@ -215,9 +215,13 @@ source /usr/share/doc/fzf/examples/key-bindings.bash
 source /usr/share/doc/fzf/examples/completion.bash
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# make CapsLhome/tomasz/home/HomyCopy/.config/starship.tomlock behave like Ctrl:
+setxkbmap -option ctrl:nocaps
+# make short-pressed Ctrl behave like Escape:
+xcape -e 'Control_L=Escape'
+
 eval "$(starship init bash)"
 #xmodmap ~/.speedswapper
 stty -ixon # disable ctr-s and ctr-q.
 #tmux a
-echo -e "Hey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
 l
