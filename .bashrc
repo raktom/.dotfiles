@@ -215,11 +215,15 @@ source /usr/share/doc/fzf/examples/key-bindings.bash
 source /usr/share/doc/fzf/examples/completion.bash
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-# make CapsLhome/tomasz/home/HomyCopy/.config/starship.tomlock behave like Ctrl:
+# make CapsLlock behave like Ctrl:
 setxkbmap -option ctrl:nocaps
 # make short-pressed Ctrl behave like Escape:
 xcape -e 'Control_L=Escape'
 
+# Xinput configs (touchpad)
+xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Natural Scrolling Enabled" 1
+xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Click Method Enabled" 0 1
+xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Disable While Typing Enabled" 0
 eval "$(starship init bash)"
 #xmodmap ~/.speedswapper
 stty -ixon # disable ctr-s and ctr-q.
