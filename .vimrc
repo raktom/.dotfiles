@@ -8,15 +8,16 @@
 "#                                                                            #
 "##############################################################################
 
+" use all vim functionality, nvim also reads it
 if &compatible
 	set nocompatible
 endif
 set noswapfile
 set nobackup
 if has('persistent_undo')      "check if your vim version supports it
-  set undofile                 "turn on the feature  
-  set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
-  endif     
+	set undofile                 "turn on the feature  
+	set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
+	endif     
 "set undofile
 "set undodir=/tmp//
 set termguicolors
@@ -32,11 +33,11 @@ set laststatus=2
 set noshowmode
 set showcmd
 set scrolloff=3
-set sidescroll=3
+set sidescroll=1
+set sidescrolloff=5
 set wildmenu
 set wildignorecase
-set splitright
-set splitbelow
+set splitright splitbelow
 let &colorcolumn="80,".join(range(120,999),",")
 set cursorline
 set nohlsearch
@@ -94,9 +95,14 @@ nnoremap <silent> <leader>m :Marks<CR>
 nnoremap <silent> <leader>l :BLines<CR>
 nnoremap <silent> <F1> :Helptags<CR>
 inoremap <silent> <F1> <Esc>:Helptags<CR>
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+" Insert mode completion
 imap <C-x><C-f> <plug>(fzf-complete-path)
 imap <C-x><C-k> <plug>(fzf-complete-word)
-imap <C-x><C-l> <plug>(fzf-complete-buffer-line)
+imap <C-x><C-l> <plug>(fzf-complete-line)
 noremap <leader>y "+y
 noremap <leader>p "+p
 nnoremap <leader>e :vsplit $MYVIMRC<cr>
@@ -150,13 +156,13 @@ inoremap <C-j> <Down>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
 inoremap <C-s>     <C-O>:update<cr>
-nnoremap <C-s>     :update<cr>
-nnoremap <leader>s :update<cr>
-nnoremap <leader>w :update<cr>
+nnoremap <C-s>     :update<cr> :echo " File saved! "<cr>
+noremap <leader>s :update<cr> :echo " File saved! "<cr>
+nnoremap <leader>w :update<cr> :echo " File saved! "<cr>
 nnoremap <leader>q :q<CR>
 "nmap <C-s> :w<CR> :echo " File saved! "<cr>
 "map <C-s> <Esc><C"s>gv
-"map <C-s> <Esc><c-s> :echo " File saved! "<cr>
+" emacs style command line movements
 cnoremap <C-A> <Home>
 cnoremap <C-B> <Left>
 cnoremap <C-D> <Del>
@@ -166,6 +172,8 @@ cnoremap <C-N> <Down>
 "cnoremap <C-P> <Up>
 cnoremap <Esc><C-B> <S-Left>
 cnoremap <Esc><C-F> <S-Right>
+" write files without permissions with w!! comand
+cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Abbreviations
 iab #! #!/bin/bash
@@ -174,7 +182,6 @@ iab ccopy Copyright 2021 Tomasz Rak, all rights reserve.
 iab date <c-r>=strftime('%Y-%m-%d')<cr>
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 
-set rtp+=~/.fzf
 let g:fzf_preview_window = 'right:50%'
 let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6  }  }
 "
@@ -207,38 +214,38 @@ let g:webdevicons_enable = 1
 let g:lightline#bufferline#enable_devicons = 1
 
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ],
-      \   'right': [ [ 'lineinfo' ],
-      \              [ 'percent' ],
-      \              [ 'fileformat', 'fileencoding', 'spell', 'filetype', 'charvaluehex' ] ]
-      \ },
-	  \ 'tabline': {
-      \   'left': [ ['buffers'] ],
-      \   'right': [ ['close'] ]
-      \ },
-      \ 'component_expand': {
-      \   'buffers': 'lightline#bufferline#buffers'
-      \ },
-      \ 'component_type': {
-      \   'buffers': 'tabsel'
-	  \ },
-      \ 'component': {
-      \   'charvaluehex': '0x%B'
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \   'filetype': 'MyFiletype',
-      \   'fileformat': 'MyFileformat',
-      \ },
-      \ }
+	\ 'colorscheme': 'wombat',
+	\ 'active': {
+	\   'left': [ [ 'mode', 'paste' ],
+	\             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ],
+	\   'right': [ [ 'lineinfo' ],
+	\              [ 'percent' ],
+	\              [ 'fileformat', 'fileencoding', 'spell', 'filetype', 'charvaluehex' ] ]
+	\ },
+	\ 'tabline': {
+	\   'left': [ ['buffers'] ],
+	\   'right': [ ['close'] ]
+	\ },
+	\ 'component_expand': {
+	\   'buffers': 'lightline#bufferline#buffers'
+	\ },
+	\ 'component_type': {
+	\   'buffers': 'tabsel'
+	\ },
+	\ 'component': {
+	\   'charvaluehex': '0x%B'
+	\ },
+	\ 'component_function': {
+	\   'gitbranch': 'FugitiveHead',
+	\   'filetype': 'MyFiletype',
+	\   'fileformat': 'MyFileformat',
+	\ },
+	\ }
 function! MyFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+	return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
 function! MyFileformat()
-  return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+	return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
 " PLUGINS with Plug
@@ -251,15 +258,19 @@ endfunction
 "PlugSnapshot[!] [output path]     	Generate script for restoring the current snapshot of the plugins
 " Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+	\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 " Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | source $MYVIMRC
+	\| PlugInstall --sync | source $MYVIMRC
 \| endif
 call plug#begin('~/.vim/plugged')
+" make sure that you have the latest version of the binary,
+" it gives :FZF command for basic file search
+" C+x -opens in new split, C+v -new vert-split, C-+t -new tab
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" gives lots of commands like :Files :Gfiles ...
 Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'itchyny/lightline.vim'
@@ -280,7 +291,6 @@ call plug#end()
 colorscheme nightfox
 lua << EOF
 local nightfox = require('nightfox')
-
 -- This function set the configuration of nightfox. If a value is not passed in the setup function
 -- it will be taken from the default configuration above
 nightfox.setup({
