@@ -10,6 +10,7 @@ Environment:
 - vim/neovim
 - git
 - fzf & ag
+- bash-it, tldr, bat, exa, starship
 - scripts
 
 Tiling wm - bspwm includes:
