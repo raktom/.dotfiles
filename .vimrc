@@ -76,20 +76,14 @@ set showbreak=↪
 highlight NonText ctermfg=Black guifg=#000000 
 highlight SpecialKey ctermfg=Black guifg=#000000 
 
-execute "set <F20>=\e[13;2u"
-execute "set <F21>=\e[13;5u"
-" Shift-Enter(remapped as <F20>) to start editing new line below without splitting the current one
-" Ctrl-Enter(remapped as <F21>) to start editing new line above
-inoremap <F20> <C-o>o
-inoremap <F21> <C-o>O
 " default mapleader \ could be changed to space or ,
 let mapleader = " " 
 let maplocalleader = "\\"
 " switch between buffers
 nnoremap <leader><leader> <c-^>
+" use fzf window
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>F :Files!<CR>
-cnoremap <silent> <C-p> :History:<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>m :Marks<CR>
 nnoremap <silent> <leader>l :BLines<CR>
@@ -105,13 +99,14 @@ imap <C-x><C-k> <plug>(fzf-complete-word)
 imap <C-x><C-l> <plug>(fzf-complete-line)
 noremap <leader>y "+y
 noremap <leader>p "+p
-nnoremap <leader>e :vsplit $MYVIMRC<cr>
-nnoremap <leader>r :source $MYVIMRC<cr> :echo "!! Reloading .vimrc !!"<cr>
+nnoremap <leader>e :vsplit $HOME/.vimrc<cr>
+nnoremap <leader>r :source $HOME/.vimrc<cr> :echo "!! Reloading .vimrc !!"<cr>
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
 nnoremap <leader>< viw<esc>a><esc>bi<<esc>lel
 
+nnoremap <cr> o<esc>
 nnoremap ; :
 nnoremap : ;
 vnoremap ; :
@@ -120,15 +115,17 @@ nnoremap ' `
 nnoremap ` '
 nnoremap j gj
 nnoremap k gk
+" another way to escape
 noremap! ii <C-c>
 noremap! jk <C-c>
+" cursor in center of screen
 nmap G Gzz
 nmap n nzz
 nmap N Nzz
 nmap } }zz
 nmap { {zz
 noremap <C-Space> 10j
-noremap <C-S-Space> 10k
+noremap <S-C-Space> 10k
 nnoremap Y y$
 inoremap <> <><Left>
 inoremap () ()<Left>
@@ -137,20 +134,10 @@ inoremap [] []<Left>
 inoremap "" ""<Left>
 inoremap '' ''<Left>
 inoremap `` ``<Left>
-nmap <Up>    <Nop>
-nmap <Down>  <Nop>
-nmap <Left>  <Nop>
-nmap <Right> <Nop>
-map $ <Nop>
-map ^ <Nop>
 noremap K     {
 noremap J     }
 noremap H     ^
 noremap L     $
-imap <Up>    <Nop>
-imap <Down>  <Nop>
-imap <Left>  <Nop>
-imap <Right> <Nop>
 inoremap <C-k> <Up>
 inoremap <C-j> <Down>
 inoremap <C-h> <Left>
@@ -169,6 +156,7 @@ cnoremap <C-D> <Del>
 cnoremap <C-E> <End>
 cnoremap <C-F> <Right>
 cnoremap <C-N> <Down>
+cnoremap <silent> <C-p> :History:<CR>
 "cnoremap <C-P> <Up>
 cnoremap <Esc><C-B> <S-Left>
 cnoremap <Esc><C-F> <S-Right>
@@ -301,9 +289,6 @@ nightfox.setup({
     comments = "italic", -- change style of comments to be italic
     keywords = "bold", -- change style of keywords to be bold
     functions = "italic,bold" -- styles can be a comma separated list
-  },
-  inverse = {
-    match_paren = "true", -- inverse the highlighting of match_parens
   },
   colors = {
     red = "#FF000", -- Override the red color for MAX POWER
