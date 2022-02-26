@@ -189,15 +189,18 @@ alias info='pinfo'
 alias bat='batcat'
 alias ed="ed -v --prompt='Im simple ED: '"
 alias v='nvim'
+# simpler then man to get basic info about command
+alias m='tldr -t ocean'
 alias z='zathura'
-alias extip='curl ipinfo.io/ip'
-alias ip="/bin/ip -4 -br a | awk '/UP/{ print $3 }' | cut -f3 | cut -f1 -d'/'"
+alias ip='ip -c'
+alias ipext='curl ipinfo.io/ip;echo'
+alias ipint="/usr/sbin/ip -br a | awk '/UP/{ print \$3 }'| cut -d/ -f1"
 alias speedtest="curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python3 -"
 alias ports='netstat -tulanp'
 alias untar='tar -zxvf'
-# to automaticly connect to tmux-ses on thinkpad
+# automaticly connect to tmux-ses on thinkpad
 alias thinkpad="ssh thinkpad -t tmux a"
-# to put history record into clipboard through fuzzy search
+# put history record into clipboard through fuzzy search
 alias h="history | cut -c 8- | sort -u | fzf | tr -d '\n' | xclip -selection c"
 alias graph='git log --all --decorate --oneline --graph'
 alias gitdf='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
@@ -209,6 +212,8 @@ export VISUAL='nvim'
 # F2-toggles preview F3-batcat F4-editor M-w-toggle wrap C-y-copy to clipboard C-x-to remove C-l- to clear 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export FZF_DEFAULT_OPTS="--no-mouse --height 50% --reverse --multi --info=inline --preview='$HOME/.vim/plugged/fzf.vim/bin/preview.sh {}' --preview-window='right:60%:nowrap:hidden' --bind='f2:toggle-preview,f3:execute(batcat --style=numbers {} || less -f {}),f4:execute($EDITOR {}),alt-w:toggle-preview-wrap,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-y:execute-silent(echo {+} | xclip -selection c),ctrl-x:execute(rm -i {+})+abort,ctrl-l:clear-query'"
+export FZF_TMUX_OPTS="-p"
+export VAGRANT_DEFAULT_PROVIDER=libvirt
 
 source ~/bin/colors
 source /usr/share/doc/fzf/examples/key-bindings.bash
@@ -222,7 +227,7 @@ xcape -e 'Control_L=Escape'
 
 # Xinput configs (touchpad)
 xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Natural Scrolling Enabled" 1
-xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Click Method Enabled" 0 1
+#xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Click Method Enabled" 0 1
 xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Disable While Typing Enabled" 0
 eval "$(starship init bash)"
 #xmodmap ~/.speedswapper
