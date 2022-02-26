@@ -1,6 +1,6 @@
 # .dotfiles
-
-My configuration files in bare repository.
+---
+## My configuration files in bare repository.
 
 Environment:
 - gnome/bspwm
@@ -21,7 +21,6 @@ Tiling wm - bspwm includes:
 - dunst
  
  To clone into new machine:
-
 ```bash 
 git clone --bare https://github.com/raktom/.dotfiles.git $HOME/.dotfiles.git
 function gitdf {

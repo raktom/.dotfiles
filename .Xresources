@@ -33,7 +33,7 @@ URxvt.saveline: 2048
 URxvt.scrollBar: false
 URxvt.scrollBar_right: false
 URxvt.urgentOnBell: true
-URxvt.depth: 24
+URxvt.depth: 32
 
 ! Dracula Xresources palette
 *.foreground: #F8F8F2
