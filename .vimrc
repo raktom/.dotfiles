@@ -298,38 +298,10 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'morhetz/gruvbox'
 Plug 'tomasr/molokai'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
-Plug 'EdenEast/nightfox.nvim'
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
-colorscheme nightfox
-lua << EOF
-local nightfox = require('nightfox')
--- This function set the configuration of nightfox. If a value is not passed in the setup function
--- it will be taken from the default configuration above
-nightfox.setup({
-  fox = "nightfox", -- change the colorscheme to use nordfox
-  alt_nc = "true",
-  terminal_colors = "true",
-  styles = {
-    comments = "italic", -- change style of comments to be italic
-    keywords = "bold", -- change style of keywords to be bold
-    functions = "italic,bold" -- styles can be a comma separated list
-  },
-  colors = {
-    red = "#FF000", -- Override the red color for MAX POWER
-    bg_alt = "#000000",
-  },
-  hlgroups = {
-    TSPunctDelimiter = { fg = "${red}" }, -- Override a highlight group with the color red
-    LspCodeLens = { bg = "#000000", style = "italic" },
-  }
-})
-
--- Load the configuration set above and apply the colorscheme
-nightfox.load()
-EOF
-
+colorscheme dracula
 " Dimming inactive(NC-not current) vim panes
 "highlight Normal ctermfg=145 ctermbg=none guifg=#cdcecf guibg=none " guibg=#192330
 highlight NormalNC guibg=#3d3e4a
