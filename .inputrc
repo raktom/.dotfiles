@@ -15,7 +15,7 @@
 # get some goodies from system-wide settings
 $include /etc/inputrc
 
-# in emacs mode 
+# in emacs mode
 # use C-a C-e C-f C-b M-f M-b C-]-ch M-C-]-ch in line moving
 # and C-k C-u C-d C-h M-C-h M-d for killing
 # C-y yank whats killed M-. yank last arg M-NR M-. or any
@@ -39,21 +39,22 @@ $include /etc/inputrc
 "\e\C-m":'\C-a "$(\C-e)"\C-a'
 # M-' -put whole line into double quotes
 "\e'":'\C-a "\C-e"\C-a'
-# M-/ -for curr-command choose (by fzf) arg from output of prev-comm 
+# Quote the current or previous word
+"\C-xq": "\eB\"\eF\""
+# M-/ -for curr-command choose (by fzf) arg from output of prev-comm
 "\e/":'"$(!!|fzf)"\C-a \C-m\C-m'
 # M-x -jump into dir of prev-command
-"\ex":'cd !$' 
+"\ex":'cd !$\C-m\C-m'
 
 $if mode=vi
     set keymap vi-command
     "gg":beginning-of-history
     "G":end-of-history
-    "@@":emacs-editing-mode
+    "\C-e":emacs-editing-mode
     set keymap vi-insert
     "ii":vi-movement-mode # remap escape
     "\C-p":history-search-backward
     "\C-l":clear-screen
-    "@@":emacs-editing-mode
 $endif
 
 #set keyseq-timeout 100
