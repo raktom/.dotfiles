@@ -16,7 +16,7 @@ add_newline = false
 
 # Use custom format
 format = """
-[ ┌─────┤](bold green)$env_var@$hostname$all\
+[ ┌───────┤](bold green)$env_var@$hostname$all\
 [└─](bold green)$jobs$shlvl$status$character"""
 
 right_format = """$time"""
@@ -29,7 +29,7 @@ format = "[$env_value]($style)"
 [hostname]
 ssh_only = false
 format =  "[$hostname](purple):"
-trim_at = ".companyname.com"
+trim_at = ".tomaszrak.xyz"
 disabled = false
 
 [directory]
