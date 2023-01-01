@@ -8,26 +8,32 @@
 "#                                                                            #
 "##############################################################################
 
-" use all vim functionality, nvim also reads it
+" be iMproved and use all vim functionality, nvim also reads it
 if &compatible
 	set nocompatible
 endif
-set noswapfile
-set nobackup
-if has('persistent_undo')      "check if your vim version supports it
-	set undofile                 "turn on the feature  
+set noswapfile 		"swapfile saves not written changes in a case
+set directory=$HOME/.vim/swp// "location for swapfiles
+set nobackup		"
+set backupdir=$HOME/.vim/.backup// "location for backups
+if has('persistent_undo')        "check if your vim version supports undo-tree
+	set undofile                 "turn on the feature
 	set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
-	endif     
-"set undofile
-"set undodir=/tmp//
+endif
+set viminfo='100,n$HOME/.vim/info/viminfo "other info saved here
+" enable project specific vimrc
+"set exrc
+set path=.,**
 set termguicolors
-set guifont=CaskaydiaCove\ Nerd\ Font\ 13
+set guifont="CaskaydiaCove Nerd Font 13"
 set encoding=UTF-8
 set spelllang=en,pl,de
 set complete+=i,kspell
 set mouse=a
 syntax enable
 filetype plugin indent on
+" no delays on ESC
+set timeoutlen=1000 ttimeoutlen=0
 set updatetime=500
 set title
 set laststatus=2
@@ -41,6 +47,7 @@ set wildignorecase
 set splitright splitbelow
 let &colorcolumn="80,".join(range(120,999),",")
 set cursorline
+set wrapscan
 set nohlsearch
 set ignorecase
 set smartcase
@@ -50,39 +57,48 @@ set belloff=esc
 set confirm
 set hidden
 set backspace=indent,eol,start
-set shiftwidth=4 tabstop=4 
+set shiftwidth=4 tabstop=4
+au FileType html set sw=2 ts=2 et
 set smarttab
 set showmatch
 set matchpairs+=<:>
-
-" automatically rebalance windows on vim resize
-autocmd VimResized * :wincmd =
-" zoom a vim pane, <C-w>= to re-balance
-nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
-nnoremap <leader>= :wincmd =<cr>
-
+" normally y d c p use unnamed reg but 'unnamed' changes to * 'unnemedplus' to +
+" X puts selection to PRIMARY -> * and copy (^C) to CLIPBOARD -> +
+set clipboard^=unnamedplus
 "let g:fzf_buffers_jump = 1
-set clipboard=unnamedplus
+
+
+" run templates for empty files of some formats
+:autocmd BufNewFile *.sh 0r ~/.vim/templates/sh.tpl
+:autocmd BufNewFile *.html 0r ~/.vim/templates/html.tpl
+:autocmd BufNewFile *.service 0r ~/.vim/templates/service.tpl
+:autocmd BufNewFile *.md 0r ~/.vim/templates/md.tpl +4
+
 set number relativenumber
-augroup numbertoggle
-	autocmd!
-	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-	autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
-augroup END
+"augroup numbertoggle
+"	autocmd!
+"	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+"	autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
+"augroup END
 "set listchars=tab:\|\ ,space:·,nbsp:␣,trail:•,eol:¬,precedes:«,extends:»
-set listchars=tab:▸\ ,eol:↲,extends:❯,precedes:❮
+set listchars=tab:\|▸\ ,eol:↲,extends:❯,precedes:❮
 "set listchars=tab:→\ ,eol:↲
 set list
 set showbreak=↪
-highlight NonText ctermfg=Black guifg=#000000 
-highlight SpecialKey ctermfg=Black guifg=#000000 
+highlight NonText ctermfg=Black guifg=#000000
+highlight SpecialKey ctermfg=Black guifg=#000000
+" highlight trailing whitespace
+match ErrorMsg '\s\+$'
 
 " default mapleader \ could be changed to space or ,
-let mapleader = " " 
+let mapleader = " "
 let maplocalleader = "\\"
 " switch between buffers
-nnoremap <leader><leader> <c-^>
-" use fzf window
+nnoremap <leader><leader> <C-^>
+
+" FZF popup window for searching
+" Enter - opens in current window
+" C-v - in vert split; C-x - in horiz split; C-t - in new tab
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>F :Files!<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
@@ -98,20 +114,23 @@ omap <leader><tab> <plug>(fzf-maps-o)
 imap <C-x><C-f> <plug>(fzf-complete-path)
 imap <C-x><C-k> <plug>(fzf-complete-word)
 imap <C-x><C-l> <plug>(fzf-complete-line)
+
 noremap <leader>y "+y
 noremap <leader>p "+p
-nnoremap <leader>e :vsplit $HOME/.vimrc<cr>
-nnoremap <leader>r :source $HOME/.vimrc<cr> :echo "!! Reloading .vimrc !!"<cr>
+nnoremap <leader>e :vsplit $HOME/.vimrc<CR>
+nnoremap <leader>r :source $HOME/.vimrc<CR> :echo "!! Reloading .vimrc !!"<CR>
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
 nnoremap <leader>< viw<esc>a><esc>bi<<esc>lel
 
-nnoremap <cr> o<esc>
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
+nnoremap <CR> o<esc>
+nnoremap <M-CR> O<esc>
+
+"nnoremap ; :
+"nnoremap : ;
+"vnoremap ; :
+"vnoremap : ;
 nnoremap ' `
 nnoremap ` '
 nnoremap j gj
@@ -129,7 +148,7 @@ noremap <C-Space> 10j
 noremap <S-C-Space> 10k
 nnoremap Y y$
 inoremap <> <><Left>
-inoremap () ()<Left>
+"inoremap () ()<Left>
 inoremap {} {}<Left>
 inoremap [] []<Left>
 inoremap "" ""<Left>
@@ -139,17 +158,22 @@ noremap K     {
 noremap J     }
 noremap H     ^
 noremap L     $
-inoremap <C-k> <Up>
-inoremap <C-j> <Down>
-inoremap <C-h> <Left>
-inoremap <C-l> <Right>
-inoremap <C-s>     <C-O>:update<cr>
-nnoremap <C-s>     :update<cr> :echo " File saved! "<cr>
-noremap <leader>s :update<cr> :echo " File saved! "<cr>
-nnoremap <leader>w :update<cr> :echo " File saved! "<cr>
+inoremap <M-k> <Up>
+inoremap <M-j> <Down>
+inoremap <M-h> <Left>
+inoremap <M-l> <Right>
+inoremap <C-s>     <C-O>:update<CR>
+nnoremap <C-s>     :update<CR> :echo " File saved! "<CR>
+noremap <leader>s :update<CR> :echo " File saved! "<CR>
+nnoremap <leader>w :update<CR> :echo " File saved! "<CR>
 nnoremap <leader>q :q<CR>
-"nmap <C-s> :w<CR> :echo " File saved! "<cr>
-"map <C-s> <Esc><C"s>gv
+
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+" zoom a vim pane, <C-w>= to re-balance
+nnoremap <leader>- :wincmd _<CR>:wincmd \|<CR>
+nnoremap <leader>= :wincmd =<CR>
+
 " emacs style command line movements
 cnoremap <C-A> <Home>
 cnoremap <C-B> <Left>
@@ -161,24 +185,123 @@ cnoremap <silent> <C-p> :History:<CR>
 "cnoremap <C-P> <Up>
 cnoremap <Esc><C-B> <S-Left>
 cnoremap <Esc><C-F> <S-Right>
-" write files without permissions with w!! comand
+
+" write files without permissions with w!! comand or just suda plugin
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " Abbreviations
-iab #! #!/bin/bash
+iab #!/ #!/bin/bash
 iab @@ raktom0@gmail.com
-iab ccopy Copyright 2021 Tomasz Rak, all rights reserve.
-iab date <c-r>=strftime('%Y-%m-%d')<cr>
+iab ccopy Copyright (c) 2021 Tomasz Rak, all rights reserve.
+iab date <C-r>=strftime('%Y-%m-%d')<CR>
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 
+" look of fzf in window (popup)
+" See `man fzf-tmux` for available options
+if exists('$TMUX')
+	let g:fzf_layout = { 'tmux': '-p80%,60%' }
+else
+	let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6 } }
+endif
+" if we prefer panel at the bottom then
+"let g:fzf_layout = { 'down' : '40%' }
+"autocmd! FileType fzf
+"autocmd  FileType fzf set laststatus=0 noshowmode noruler
+"  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 let g:fzf_preview_window = 'right:50%'
-let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6  }  }
-"
+
 " automatically leave insert mode after 'updatetime' milliseconds of inaction
 au CursorHoldI * stopinsert
 " set 'updatetime' to 7 seconds when in insert mode
 au InsertEnter * let updaterestore=&updatetime | set updatetime=7000
 au InsertLeave * let &updatetime=updaterestore
+
+" Netrw settings
+let g:netrw_banner = 0
+let g:netrw_browse_split = 4
+let g:netrw_winsize = 18
+let g:netrw_liststyle = 3
+let g:netrw_bufsettings = 'noma nomod nonu norelativenumber nowrap nobl'
+noremap <silent> <A-f> :call ToggleNetrw()<CR>
+
+function! OpenToRight()
+	:normal v
+	let g:path=expand('%:p')
+	execute 'q!'
+	execute 'belowright vnew' g:path
+	:normal <C-w>l
+endfunction
+
+function! OpenBelow()
+	:normal v
+	let g:path=expand('%:p')
+	execute 'q!'
+	execute 'belowright new' g:path
+	:normal <C-w>l
+endfunction
+
+function! OpenTab()
+	:normal v
+	let g:path=expand('%:p')
+	execute 'q!'
+	execute 'tabedit' g:path
+	:normal <C-w>l
+endfunction
+
+function! NetrwMappings()
+	" Hack fix to make ctrl-l work properly
+	noremap <buffer> <A-l> <C-w>l
+	noremap <buffer> <C-l> <C-w>l
+	noremap <silent> <A-f> :call ToggleNetrw()<CR>
+	noremap <buffer> V :call OpenToRight()<CR>
+	noremap <buffer> H :call OpenBelow()<CR>
+	noremap <buffer> T :call OpenTab()<CR>
+endfunction
+
+augroup netrw_mappings
+	autocmd!
+	autocmd filetype netrw call NetrwMappings()
+augroup END
+
+" Allow for netrw to be toggled
+function! ToggleNetrw()
+	if g:NetrwIsOpen
+		let i = bufnr("$")
+		while (i >= 1)
+			if (getbufvar(i, "&filetype") == "netrw")
+				silent exe "bwipeout " . i
+			endif
+			let i-=1
+		endwhile
+		let g:NetrwIsOpen=0
+	else
+		let g:NetrwIsOpen=1
+		silent Lexplore
+	endif
+endfunction
+
+" Check before opening buffer on any file
+function! NetrwOnBufferOpen()
+	if exists('b:noNetrw')
+			return
+	endif
+	call ToggleNetrw()
+endfun
+
+" Close Netrw if it's the only buffer open
+autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" || &buftype == 'quickfix' |q|endif
+
+" Make netrw act like a project Draw
+augroup ProjectDrawer
+	autocmd!
+	" Don't open Netrw
+"	autocmd VimEnter ~/.config/joplin/tmp/*,/tmp/calcurse*,~/.calcurse/notes/*,~/vimwiki/*,*/.git/COMMIT_EDITMSG let b:noNetrw=1
+"	autocmd VimEnter ~/.vimrc,~/.tmux.conf,~/.bashrc,~/.input.rc,*.task let b:noNetrw=1
+	autocmd VimEnter * :call NetrwOnBufferOpen()
+	autocmd VimEnter * :call ToggleNetrw()
+augroup END
+
+let g:NetrwIsOpen=0
 
 if &diff
 	let s:is_started_as_vim_diff = 1
@@ -186,6 +309,7 @@ if &diff
 	setlocal nospell
 	highlight NormalNC guibg=none
 endif
+
 " Markdown Preview settings
 " set to 1, nvim will open the preview window after entering the markdown buffer
 let g:mkdp_auto_start = 0
@@ -210,12 +334,15 @@ let g:mkdp_open_ip = ''
 let g:mkdp_browser = 'chromium'
 " these filetypes will have MarkdownPreview... commands
 let g:mkdp_filetypes = ['markdown']
+
 " vimwiki settings
-let g:vimwiki_list = [{'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/vimwiki', 
+    \ 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 " makes vimwiki markdown links as [text](text.md) instead of [text](text)
 let g:vimwiki_markdown_link_ext = 1
-let g:vimwiki_markpu_syntax = 'markdown'
+let g:vimwiki_global_ext = 0
+let g:vimwiki_markup_syntax = 'markdown'
 let g:markdown_folding = 1
 " use <Tab> to trigger autocompletion
 let g:UltiSnipsExpandTrigger="<C-J>"
@@ -261,6 +388,12 @@ function! MyFileformat()
 	return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
+" let g:floaterm_keymap_new = '<Leader>t'
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
+
+let g:suda_smart_edit = 1
+
 " PLUGINS with Plug
 "PlugInstall [name ...] [#threads] 	Install plugins
 "PlugUpdate [name ...] [#threads]  	Install or update plugins
@@ -288,17 +421,22 @@ Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
+Plug 'voldikss/vim-floaterm'
+Plug 'dylanaraps/fff.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'vimwiki/vimwiki'
+Plug 'tbabej/taskwiki'
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'dbeniamine/cheat.sh-vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'morhetz/gruvbox'
 Plug 'tomasr/molokai'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
 Plug 'ryanoasis/vim-devicons'
+Plug 'lambdalisue/suda.vim'
 call plug#end()
 
 colorscheme dracula
