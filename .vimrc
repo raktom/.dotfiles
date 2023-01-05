@@ -67,7 +67,6 @@ set matchpairs+=<:>
 set clipboard^=unnamedplus
 "let g:fzf_buffers_jump = 1
 
-
 " run templates for empty files of some formats
 :autocmd BufNewFile *.sh 0r ~/.vim/templates/sh.tpl
 :autocmd BufNewFile *.html 0r ~/.vim/templates/html.tpl
@@ -80,6 +79,7 @@ set number relativenumber
 "	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
 "	autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
 "augroup END
+
 "set listchars=tab:\|\ ,space:·,nbsp:␣,trail:•,eol:¬,precedes:«,extends:»
 set listchars=tab:\|▸\ ,eol:↲,extends:❯,precedes:❮
 "set listchars=tab:→\ ,eol:↲
@@ -97,8 +97,8 @@ let maplocalleader = "\\"
 nnoremap <leader><leader> <C-^>
 
 " FZF popup window for searching
-" Enter - opens in current window
-" C-v - in vert split; C-x - in horiz split; C-t - in new tab
+" select than to open press: Enter -in current window
+" C-v -in vert split; C-x -in horiz split; C-t -in new tab
 nnoremap <silent> <leader>f :Files<CR>
 nnoremap <silent> <leader>F :Files!<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
@@ -114,29 +114,30 @@ omap <leader><tab> <plug>(fzf-maps-o)
 imap <C-x><C-f> <plug>(fzf-complete-path)
 imap <C-x><C-k> <plug>(fzf-complete-word)
 imap <C-x><C-l> <plug>(fzf-complete-line)
-
+" leader helps in copying
 noremap <leader>y "+y
 noremap <leader>p "+p
-
+" leader helps edit and reload .vimrc
 nnoremap <leader>e :vsplit $HOME/.vimrc<CR>
 nnoremap <leader>r :source $HOME/.vimrc<CR> :echo " !! .vimrc RELOADED !! "<CR>
-
+" put word in quotes or parents
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
 nnoremap <leader>< viw<esc>a><esc>bi<<esc>lel
-
+" normal mode logical behavior
 nnoremap <CR> i<CR><esc>
 nnoremap <M-CR> o<esc>
 nnoremap <M-o> o<esc>k
+nnoremap <leader>o o<esc>k
 nnoremap <M-O> O<esc>j
-
-"nnoremap ; :
-"nnoremap : ;
-"vnoremap ; :
-"vnoremap : ;
+nnoremap <leader>O O<esc>j
+nnoremap <M-i> i <esc>l
+nnoremap <leader>i  i <esc>l
+" swap quote and backtick
 nnoremap ' `
 nnoremap ` '
+" when line wraps then easier move with jk but relative nr??
 nnoremap j gj
 nnoremap k gk
 " another way to escape
@@ -148,36 +149,31 @@ nmap n nzz
 nmap N Nzz
 nmap } }zz
 nmap { {zz
-noremap <C-Space> 10j
-noremap <S-C-Space> 10k
+" logical yanking
 nnoremap Y y$
+" stay inside double thing
 inoremap <> <><Left>
-"inoremap () ()<Left>
 inoremap {} {}<Left>
 inoremap [] []<Left>
 inoremap "" ""<Left>
 inoremap '' ''<Left>
 inoremap `` ``<Left>
+" move paragraphwise and linewise
 noremap K     {
 noremap J     }
 noremap H     ^
 noremap L     $
+" move in insert mode
 inoremap <M-k> <Up>
 inoremap <M-j> <Down>
 inoremap <M-h> <Left>
 inoremap <M-l> <Right>
+" save how you used to
 inoremap <C-s>     <C-O>:update<CR>
 nnoremap <C-s>     :update<CR> :echo " !! FILE SAVED !! "<CR>
 noremap <leader>s :update<CR> :echo " !! FILE SAVED !! "<CR>
 nnoremap <leader>w :update<CR> :echo " !! FILE SAVED !! "<CR>
 nnoremap <leader>q :q<CR>
-
-" automatically rebalance windows on vim resize
-autocmd VimResized * :wincmd =
-" zoom a vim pane, <C-w>= to re-balance
-nnoremap <leader>- :wincmd _<CR>:wincmd \|<CR>
-nnoremap <leader>= :wincmd =<CR>
-
 " emacs style command line movements
 cnoremap <C-A> <Home>
 cnoremap <C-B> <Left>
@@ -189,6 +185,12 @@ cnoremap <silent> <C-p> :History:<CR>
 "cnoremap <C-P> <Up>
 cnoremap <Esc><C-B> <S-Left>
 cnoremap <Esc><C-F> <S-Right>
+
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+" zoom a vim pane, <C-w>= to re-balance
+nnoremap <leader>- :wincmd _<CR>:wincmd \|<CR>
+nnoremap <leader>= :wincmd =<CR>
 
 " write files without permissions with w!! comand or just suda plugin
 cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
@@ -392,20 +394,21 @@ function! MyFileformat()
 	return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 
-" let g:floaterm_keymap_new = '<Leader>t'
+let g:floaterm_keymap_new = '<Leader>t'
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
-
+" files which need privileges no problem
 let g:suda_smart_edit = 1
 
 " PLUGINS with Plug
-"PlugInstall [name ...] [#threads] 	Install plugins
-"PlugUpdate [name ...] [#threads]  	Install or update plugins
-"PlugClean[!]                      	Remove unlisted plugins (bang version will clean without prompt)
-"PlugUpgrade                       	Upgrade vim-plug itself
-"PlugStatus                        	Check the status of plugins
-"PlugDiff                          	Examine changes from the previous update and the pending changes
-"PlugSnapshot[!] [output path]     	Generate script for restoring the current snapshot of the plugins
+"
+" PlugInstall [name ...] [#threads] 	Install plugins
+" PlugUpdate [name ...] [#threads]  	Install or update plugins
+" PlugClean[!]                      	Remove unlisted plugins (bang version will clean without prompt)
+" PlugUpgrade                       	Upgrade vim-plug itself
+" PlugStatus                        	Check the status of plugins
+" PlugDiff                          	Examine changes from the previous update and the pending changes
+" PlugSnapshot[!] [output path]     	Generate script for restoring the current snapshot of the plugins
 " Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
 	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
