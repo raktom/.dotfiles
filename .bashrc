@@ -141,9 +141,9 @@ man() {
 shopt -s autocd
 cd() {
 	if [ -n "$1" ]; then
-		builtin cd "$@"  && echo && exa -F --color=auto --group-directories-first --time-style=long-iso #&& echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
+		builtin cd "$@"  && echo && exa -F --group-directories-first --color-scale --icons #&& echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
 	else
-		builtin cd ~  && echo && exa -F --color=auto --group-directories-first --time-style=long-iso #&& echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
+		builtin cd ~  && echo && exa -F --group-directories-first --color-scale --icons #&& echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
 	fi
 }
 # generate random password with given length
@@ -169,10 +169,11 @@ fi
 weather() { curl -s --connect-timeout 3 -m 5 http://wttr.in/$1; }
 
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
-alias ls='exa -F --color=auto --group-directories-first --time-style=long-iso'
-alias l=ls
-alias ll='ls -ailFH --color-scale --icons --group-directories-first'
-alias la='ls -Fa --group-directories-first'
+alias ls='ls -F --group-directories-first --color=auto --time-style=long-iso'
+alias exa='exa -F --group-directories-first --color-scale --icons'
+alias l=exa
+alias ll='l -alH'
+alias la='l -a'
 alias c='clear'
 alias cls='clear'
 alias cd..='cd ..'
@@ -242,8 +243,15 @@ eval "$(pandoc --bash-completion)"
 #xmodmap ~/scripts/speedswapper
 stty -ixon # disable ctr-s and ctr-q.
 #tmux a
-ls
+l
+if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
+    tmux attach || tmux >/dev/null 2>&1
+fi
 
+#if ! systemctl --user is-active --quiet tmux.service; then
+#    systemctl --user start tmux.service
+#fi
+#exec tmux attach-session -d -t "${USER}" >/dev/null 2>&1
 # gpg might need it when pinentry problem occure
 #export GPG_TTY=$(tty)
 # set SSH_AUTH_SOCK so that SSH will use gpg-agent instead of ssh-agent
