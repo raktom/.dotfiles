@@ -117,15 +117,19 @@ imap <C-x><C-l> <plug>(fzf-complete-line)
 
 noremap <leader>y "+y
 noremap <leader>p "+p
+
 nnoremap <leader>e :vsplit $HOME/.vimrc<CR>
-nnoremap <leader>r :source $HOME/.vimrc<CR> :echo "!! Reloading .vimrc !!"<CR>
+nnoremap <leader>r :source $HOME/.vimrc<CR> :echo " !! .vimrc RELOADED !! "<CR>
+
 nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
 nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
 nnoremap <leader>( viw<esc>a)<esc>bi(<esc>lel
 nnoremap <leader>< viw<esc>a><esc>bi<<esc>lel
 
-nnoremap <CR> o<esc>
-nnoremap <M-CR> O<esc>
+nnoremap <CR> i<CR><esc>
+nnoremap <M-CR> o<esc>
+nnoremap <M-o> o<esc>k
+nnoremap <M-O> O<esc>j
 
 "nnoremap ; :
 "nnoremap : ;
@@ -163,9 +167,9 @@ inoremap <M-j> <Down>
 inoremap <M-h> <Left>
 inoremap <M-l> <Right>
 inoremap <C-s>     <C-O>:update<CR>
-nnoremap <C-s>     :update<CR> :echo " File saved! "<CR>
-noremap <leader>s :update<CR> :echo " File saved! "<CR>
-nnoremap <leader>w :update<CR> :echo " File saved! "<CR>
+nnoremap <C-s>     :update<CR> :echo " !! FILE SAVED !! "<CR>
+noremap <leader>s :update<CR> :echo " !! FILE SAVED !! "<CR>
+nnoremap <leader>w :update<CR> :echo " !! FILE SAVED !! "<CR>
 nnoremap <leader>q :q<CR>
 
 " automatically rebalance windows on vim resize
