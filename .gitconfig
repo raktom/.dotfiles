@@ -8,14 +8,13 @@
     gpgsign = true
 [tag]
     gpgSign = true
-
 [init]
-	defaultBranch = main
+    defaultBranch = main
 [diff]
-	tool = nvim
-	submodule = log
-	algorithm = patience
-	indentHeuristic = true
+    tool = nvim
+    submodule = log
+    algorithm = patience
+    indentHeuristic = true
 [difftool "nvim"]
-	cmd = "nvim -f -d -c \"wincmd l\" -c 'cd \"$GIT_PREFIX\"' \"$LOCAL\" \"$REMOTE\""
+   cmd = "nvim -f -d -c \"wincmd l\" -c 'cd \"$GIT_PREFIX\"' \"$LOCAL\" \"$REMOTE\""
 
