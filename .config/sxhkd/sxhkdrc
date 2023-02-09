@@ -8,14 +8,18 @@ super + {_, shift + }Return
 	{alacritty -e tmux a, alacritty}
 # program launcher
 super + @space
-	dmenu_run
+	dmenu_run -p "Run command"
+# search for password with dmenu
+super + p
+	passmenu -f -i -p "Copy password" && notify-send " Pass " \
+	" Password copied to the clipboard (for 45s) "
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
-# firefox
-#super + w
-#	firefox
-# mail
+# gui applications
+super + g; {1,2,3,4,5}
+	{chromium,thunderbird,files,vmm}
+# terminal applications
 super + x; {1,2,3,5}
 	alacritty -e {newsboat,neomutt,nvim,ncmpcpp}
 #

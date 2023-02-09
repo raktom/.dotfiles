@@ -1,9 +1,11 @@
-#! /bin/sh
+#!/bin/sh
 
 # Autostart
 pgrep -x sxhkd > /dev/null || sxhkd &
+# compositor
 picom &
-feh --bg-fill --randomize ~/Pictures/wallpapers/* &
+# image viewer wallpaper
+feh --bg-fill --randomize ~/Pictures/Wallpapers/wallpapers/* &
 # Reload .Xresources
 xrdb -load ~/.Xresources
 # Launch polybar
@@ -13,7 +15,7 @@ setxkbmap -option ctrl:nocaps
 # make short-pressed Ctrl behave like Escape:
 xcape -e 'Control_L=Escape'
 # Make US and PL keyboard layout togglable with Shift+Alt
-setxkbmap -layout us,pl -option grp:alt_shift_toggle
+#setxkbmap -layout us,pl -option grp:alt_shift_toggle
 # Start libinput gestures
 libinput-gestures-setup autostart start
 # Xinput configs (touchpad)
@@ -22,14 +24,14 @@ xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Click Method Enabled" 
 xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Disable While Typing Enabled" 0
 # Change from ugly 'X' cursor when hovering over background
 xsetroot -cursor_name left_ptr
-# Dunst
+# notifications
 dunst &
 # network-manager-applet
 nm-applet &
 
 
 # Workspaces
-bspc monitor -d I II III IV V
+bspc monitor -d I II III IV
 
 bspc rule -a Gimp desktop='^8' state=floating follow=on
 bspc rule -a Chromium desktop='^2'
