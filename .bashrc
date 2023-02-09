@@ -165,8 +165,16 @@ else
 fi
 }
 
+gacp() {
+	git add .
+	git commit -m "$1"
+	git push
+}
+
 # as argument put place for weather forecast
 weather() { curl -s --connect-timeout 3 -m 5 http://wttr.in/$1; }
+
+timestamp() { date +%Y%m%dT%H%M; }
 
 [ -f "$HOME/.config/aliasrc" ] && source "$HOME/.config/aliasrc"
 alias ls='ls -F --group-directories-first --color=auto --time-style=long-iso'
@@ -233,7 +241,6 @@ xcape -e 'Control_L=Escape'
 # make CapsLock behave like Ctrl
 #dconf write /org/gnome/desktop/input-sources/xkb-options "['caps:ctrl_modifier']"
 
-
 # Xinput configs (touchpad)
 xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Natural Scrolling Enabled" 1
 #xinput set-prop "DLL075B:01 06CB:76AF Touchpad" "libinput Click Method Enabled" 0 1
@@ -242,16 +249,16 @@ eval "$(starship init bash)"
 eval "$(pandoc --bash-completion)"
 #xmodmap ~/scripts/speedswapper
 stty -ixon # disable ctr-s and ctr-q.
-#tmux a
-l
+exa -F --group-directories-first --color-scale --icons
+
 if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
     tmux attach || tmux >/dev/null 2>&1
 fi
-
 #if ! systemctl --user is-active --quiet tmux.service; then
 #    systemctl --user start tmux.service
 #fi
 #exec tmux attach-session -d -t "${USER}" >/dev/null 2>&1
+
 # gpg might need it when pinentry problem occure
 #export GPG_TTY=$(tty)
 # set SSH_AUTH_SOCK so that SSH will use gpg-agent instead of ssh-agent
