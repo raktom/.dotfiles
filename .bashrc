@@ -182,6 +182,7 @@ alias exa='exa -F --group-directories-first --color-scale --icons'
 alias l=exa
 alias ll='l -alH'
 alias la='l -a'
+alias ld='ll -d'
 alias c='clear'
 alias cls='clear'
 alias cd..='cd ..'
@@ -201,7 +202,6 @@ alias info='pinfo'
 alias bat='batcat'
 alias ed='ed -v --prompt="${green}ED: ${normal}"'
 alias v='nvim'
-# tldr is simpler then man to get basic info about command
 alias m='tldr -t ocean'
 alias z='zathura'
 alias ip='ip -c'
@@ -217,6 +217,7 @@ alias thinkpad="ssh thinkpad -t tmux a"
 alias h="history | cut -c 8- | sort -u | fzf | tr -d '\n' | xclip -selection c"
 alias graph='git log --all --decorate --oneline --graph'
 alias gitdf='/usr/bin/git --git-dir=$HOME/.dotfiles.git/ --work-tree=$HOME'
+# open vi withvariables for dotfiles
 alias vdf='GIT_DIR=$HOME/.dotfiles.git GIT_WORK_TREE=$HOME v'
 
 export EDITOR='nvim'
@@ -264,3 +265,6 @@ fi
 # set SSH_AUTH_SOCK so that SSH will use gpg-agent instead of ssh-agent
 # add enable-ssh-support to .gnupg/gpg-agent.conf and kill gpg-agent
 #export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"

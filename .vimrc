@@ -449,7 +449,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'lambdalisue/suda.vim'
 call plug#end()
 
-colorscheme dracula
+colorscheme gruvbox
 " Dimming inactive(NC-not current) vim panes
 "highlight Normal ctermfg=145 ctermbg=none guifg=#cdcecf guibg=none " guibg=#192330
 highlight NormalNC guibg=#3d3e4a
