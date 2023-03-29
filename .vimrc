@@ -59,6 +59,7 @@ set hidden
 set backspace=indent,eol,start
 set shiftwidth=4 tabstop=4
 au FileType html set sw=2 ts=2 et
+set expandtab
 set smarttab
 set showmatch
 set matchpairs+=<:>
@@ -91,8 +92,8 @@ highlight SpecialKey ctermfg=Black guifg=#000000
 match ErrorMsg '\s\+$'
 
 " default mapleader \ could be changed to space or ,
-let mapleader = " "
-let maplocalleader = "\\"
+let mapleader=" "
+let maplocalleader="\\"
 " switch between buffers
 nnoremap <leader><leader> <C-^>
 
@@ -200,6 +201,7 @@ iab #!/ #!/bin/bash
 iab @@ raktom0@gmail.com
 iab ccopy Copyright (c) 2021 Tomasz Rak, all rights reserve.
 iab date <C-r>=strftime('%Y-%m-%d')<CR>
+iab tstp <C-r>=strftime('%Y%m%dT%H%M')<CR>
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 
 " look of fzf in window (popup)
@@ -301,7 +303,8 @@ autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype
 augroup ProjectDrawer
 	autocmd!
 	" Don't open Netrw
-"	autocmd VimEnter ~/.config/joplin/tmp/*,/tmp/calcurse*,~/.calcurse/notes/*,~/vimwiki/*,*/.git/COMMIT_EDITMSG let b:noNetrw=1
+"	autocmd VimEnter ~/.config/joplin/tmp/*,/tmp/calcurse*,~/.calcurse/notes/*,\
+"	    ~/vimwiki/*,*/.git/COMMIT_EDITMSG let b:noNetrw=1
 "	autocmd VimEnter ~/.vimrc,~/.tmux.conf,~/.bashrc,~/.input.rc,*.task let b:noNetrw=1
 	autocmd VimEnter * :call NetrwOnBufferOpen()
 	autocmd VimEnter * :call ToggleNetrw()
@@ -402,13 +405,13 @@ let g:suda_smart_edit = 1
 
 " PLUGINS with Plug
 "
-" PlugInstall [name ...] [#threads] 	Install plugins
-" PlugUpdate [name ...] [#threads]  	Install or update plugins
-" PlugClean[!]                      	Remove unlisted plugins (bang version will clean without prompt)
-" PlugUpgrade                       	Upgrade vim-plug itself
-" PlugStatus                        	Check the status of plugins
-" PlugDiff                          	Examine changes from the previous update and the pending changes
-" PlugSnapshot[!] [output path]     	Generate script for restoring the current snapshot of the plugins
+" PlugInstall  	Install plugins
+" PlugUpdate   	Install or update plugins
+" PlugClean[!] 	Remove unlisted plugins (bang version will clean without prompt)
+" PlugUpgrade  	Upgrade vim-plug itself
+" PlugStatus   	Check the status of plugins
+" PlugDiff     	Examine changes from the previous update and the pending changes
+" PlugSnapshot[!] Generate script for restoring the current snapshot of the plugins
 " Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
 	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
