@@ -1,12 +1,13 @@
 "##############################################################################
-"#  ~/.vimrc                                                                  #
-"##############################################################################
-"#                                                                            #
-"#  VIM init-config file                                                      #
-"#  ------------------------------------------------------------------------  #
-"#  Author: Tomasz Rak                                                        #
-"#                                                                            #
-"##############################################################################
+"# Title:			.vimrc                                                    #
+"# Description:		VIM init-config file                                      #
+"# Usage:			:source ~/.vimrc                                          #
+"# Author:			Tomasz Rak                                                #
+"# Email:			raktom0@gmail.com                                         #
+"# Copyrights:		© 2020 Tomasz Rak                                         #
+"# License:			BSD-2-Clause                                              #
+"# Dependencies:	vim                                                       #
+"# -------------------------------------------------------------------------- #
 
 " be iMproved and use all vim functionality, nvim also reads it
 if &compatible

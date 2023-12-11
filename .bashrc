@@ -1,13 +1,13 @@
-##############################################################################
-#  ~/.bashrc: executed by bash(1) for non-login shells.                      #
-##############################################################################
-#                                                                            #
-#  BASH-shell init-config file                                               #
-#  ------------------------------------------------------------------------  #
-#  Author: Tomasz Rak                                                        #
-#                                                                            #
-##############################################################################
-
+###############################################################################
+# Title:			.bashrc                                                   #
+# Description:		BASH-shell init-config file                               #
+# Usage:			source ~/.bashrc                                          #
+# Author:			Tomasz Rak                                                #
+# Email:			raktom0@gmail.com                                         #
+# Copyrights:		© 2020 Tomasz Rak                                         #
+# License:			BSD-2-Clause                                              #
+# Dependencies: 	bash                                                      #
+# --------------------------------------------------------------------------- #
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 

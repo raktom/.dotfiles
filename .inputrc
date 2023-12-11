@@ -1,15 +1,13 @@
-##############################################################################
-#  ~/.inputrc                                                                #
-##############################################################################
-#                                                                            #
-#  Readline-library init-config file                                         #
-#  ------------------------------------------------------------------------  #
-#  Author: Tomasz Rak                                                        #
-#                                                                            #
-##############################################################################
-
-# source this file with bash command:
-# bind -f ~/.inputrc
+###############################################################################
+# Title:			.inputrc                                                  #
+# Description:		Readline-library init-config file                         #
+# Usage:			bind -f ~/.inputrc                                        #
+# Author:			Tomasz Rak                                                #
+# Email:			raktom0@gmail.com                                         #
+# Copyrights:		© 2020 Tomasz Rak                                         #
+# License:			BSD-2-Clause                                              #
+# Dependencies: 	bash                                                      #
+# --------------------------------------------------------------------------- #
 #"\C-xr":re-read-init-file
 
 # get some goodies from system-wide settings
