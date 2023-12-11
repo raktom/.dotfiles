@@ -1,25 +1,25 @@
 "##############################################################################
-"# Title:			.vimrc                                                    #
-"# Description:		VIM init-config file                                      #
-"# Usage:			:source ~/.vimrc                                          #
-"# Author:			Tomasz Rak                                                #
-"# Email:			raktom0@gmail.com                                         #
-"# Copyrights:		© 2020 Tomasz Rak                                         #
-"# License:			BSD-2-Clause                                              #
-"# Dependencies:	vim                                                       #
+"# Title:           .vimrc                                                    #
+"# Description:     VIM init-config file                                      #
+"# Usage:           :source ~/.vimrc                                          #
+"# Author:          Tomasz Rak                                                #
+"# Email:           raktom0@gmail.com                                         #
+"# Copyrights:      © 2020 Tomasz Rak                                         #
+"# License:         BSD-2-Clause                                              #
+"# Dependencies:    vim                                                       #
 "# -------------------------------------------------------------------------- #
 
 " be iMproved and use all vim functionality, nvim also reads it
 if &compatible
-	set nocompatible
+    set nocompatible
 endif
-set noswapfile 		"swapfile saves not written changes in a case
+set noswapfile      "swapfile saves not written changes in a case
 set directory=$HOME/.vim/swp// "location for swapfiles
-set nobackup		"
+set nobackup        "
 set backupdir=$HOME/.vim/.backup// "location for backups
 if has('persistent_undo')        "check if your vim version supports undo-tree
-	set undofile                 "turn on the feature
-	set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
+    set undofile                 "turn on the feature
+    set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
 endif
 "set viminfo='100,n$HOME/.vim/info/viminfo "other info saved here like reg
 " enable project specific vimrc
@@ -79,9 +79,9 @@ set clipboard^=unnamedplus
 
 set number relativenumber
 "augroup numbertoggle
-"	autocmd!
-"	autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-"	autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
+"   autocmd!
+"   autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+"   autocmd BufLeave,FocusLost,InsertEnter * set norelativenumber
 "augroup END
 
 "set listchars=tab:\|\ ,space:·,nbsp:␣,trail:•,eol:¬,precedes:«,extends:»
@@ -207,9 +207,9 @@ let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 " look of fzf in window (popup)
 " See `man fzf-tmux` for available options
 if exists('$TMUX')
-	let g:fzf_layout = { 'tmux': '-p80%,60%' }
+    let g:fzf_layout = { 'tmux': '-p80%,60%' }
 else
-	let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6 } }
+    let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.6 } }
 endif
 " if we prefer panel at the bottom then
 "let g:fzf_layout = { 'down' : '40%' }
@@ -248,84 +248,84 @@ let g:netrw_bufsettings = 'noma nomod nonu norelativenumber nowrap nobl'
 noremap <silent> <A-f> :call ToggleNetrw()<CR>
 
 function! OpenToRight()
-	:normal v
-	let g:path=expand('%:p')
-	execute 'q!'
-	execute 'belowright vnew' g:path
-	:normal <C-w>l
+    :normal v
+    let g:path=expand('%:p')
+    execute 'q!'
+    execute 'belowright vnew' g:path
+    :normal <C-w>l
 endfunction
 
 function! OpenBelow()
-	:normal v
-	let g:path=expand('%:p')
-	execute 'q!'
-	execute 'belowright new' g:path
-	:normal <C-w>l
+    :normal v
+    let g:path=expand('%:p')
+    execute 'q!'
+    execute 'belowright new' g:path
+    :normal <C-w>l
 endfunction
 
 function! OpenTab()
-	:normal v
-	let g:path=expand('%:p')
-	execute 'q!'
-	execute 'tabedit' g:path
-	:normal <C-w>l
+    :normal v
+    let g:path=expand('%:p')
+    execute 'q!'
+    execute 'tabedit' g:path
+    :normal <C-w>l
 endfunction
 
 function! NetrwMappings()
-	" Hack fix to make ctrl-l work properly
-	noremap <buffer> <A-l> <C-w>l
-	noremap <buffer> <C-l> <C-w>l
-	noremap <silent> <A-f> :call ToggleNetrw()<CR>
-	noremap <buffer> V :call OpenToRight()<CR>
-	noremap <buffer> H :call OpenBelow()<CR>
-	noremap <buffer> T :call OpenTab()<CR>
+    " Hack fix to make ctrl-l work properly
+    noremap <buffer> <A-l> <C-w>l
+    noremap <buffer> <C-l> <C-w>l
+    noremap <silent> <A-f> :call ToggleNetrw()<CR>
+    noremap <buffer> V :call OpenToRight()<CR>
+    noremap <buffer> H :call OpenBelow()<CR>
+    noremap <buffer> T :call OpenTab()<CR>
 endfunction
 augroup netrw_mappings
-	autocmd!
-	autocmd filetype netrw call NetrwMappings()
+    autocmd!
+    autocmd filetype netrw call NetrwMappings()
 augroup END
 " Allow for netrw to be toggled
 function! ToggleNetrw()
-	if g:NetrwIsOpen
-		let i = bufnr("$")
-		while (i >= 1)
-			if (getbufvar(i, "&filetype") == "netrw")
-				silent exe "bwipeout " . i
-			endif
-			let i-=1
-		endwhile
-		let g:NetrwIsOpen=0
-	else
-		let g:NetrwIsOpen=1
-		silent Lexplore
-	endif
+    if g:NetrwIsOpen
+        let i = bufnr("$")
+        while (i >= 1)
+            if (getbufvar(i, "&filetype") == "netrw")
+                silent exe "bwipeout " . i
+            endif
+            let i-=1
+        endwhile
+        let g:NetrwIsOpen=0
+    else
+        let g:NetrwIsOpen=1
+        silent Lexplore
+    endif
 endfunction
 " Check before opening buffer on any file
 function! NetrwOnBufferOpen()
-	if exists('b:noNetrw')
-			return
-	endif
-	call ToggleNetrw()
+    if exists('b:noNetrw')
+            return
+    endif
+    call ToggleNetrw()
 endfun
 " Close Netrw if it's the only buffer open
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" || &buftype == 'quickfix' |q|endif
 " Make netrw act like a project Draw
 augroup ProjectDrawer
-	autocmd!
-	" Don't open Netrw
-"	autocmd VimEnter ~/.config/joplin/tmp/*,/tmp/calcurse*,~/.calcurse/notes/*,\
-"	    ~/vimwiki/*,*/.git/COMMIT_EDITMSG let b:noNetrw=1
-"	autocmd VimEnter ~/.vimrc,~/.tmux.conf,~/.bashrc,~/.input.rc,*.task let b:noNetrw=1
-	autocmd VimEnter * :call NetrwOnBufferOpen()
-	autocmd VimEnter * :call ToggleNetrw()
+    autocmd!
+    " Don't open Netrw
+"   autocmd VimEnter ~/.config/joplin/tmp/*,/tmp/calcurse*,~/.calcurse/notes/*,\
+"       ~/vimwiki/*,*/.git/COMMIT_EDITMSG let b:noNetrw=1
+"   autocmd VimEnter ~/.vimrc,~/.tmux.conf,~/.bashrc,~/.input.rc,*.task let b:noNetrw=1
+    autocmd VimEnter * :call NetrwOnBufferOpen()
+    autocmd VimEnter * :call ToggleNetrw()
 augroup END
 let g:NetrwIsOpen=0
 
 if &diff
-	let s:is_started_as_vim_diff = 1
-	syntax off
-	setlocal nospell
-	highlight NormalNC guibg=none
+    let s:is_started_as_vim_diff = 1
+    syntax off
+    setlocal nospell
+    highlight NormalNC guibg=none
 endif
 
 " Markdown Preview settings
@@ -372,38 +372,38 @@ let g:webdevicons_enable = 1
 let g:lightline#bufferline#enable_devicons = 1
 " lightline settings
 let g:lightline = {
-	\ 'colorscheme': 'wombat',
-	\ 'active': {
-	\   'left': [ [ 'mode', 'paste' ],
-	\             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ],
-	\   'right': [ [ 'lineinfo' ],
-	\              [ 'percent' ],
-	\              [ 'fileformat', 'fileencoding', 'spell', 'filetype', 'charvaluehex' ] ]
-	\ },
-	\ 'tabline': {
-	\   'left': [ ['buffers'] ],
-	\   'right': [ ['close'] ]
-	\ },
-	\ 'component_expand': {
-	\   'buffers': 'lightline#bufferline#buffers'
-	\ },
-	\ 'component_type': {
-	\   'buffers': 'tabsel'
-	\ },
-	\ 'component': {
-	\   'charvaluehex': '0x%B'
-	\ },
-	\ 'component_function': {
-	\   'gitbranch': 'FugitiveHead',
-	\   'filetype': 'MyFiletype',
-	\   'fileformat': 'MyFileformat',
-	\ },
-	\ }
+    \ 'colorscheme': 'wombat',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'gitbranch', 'readonly', 'absolutepath', 'modified' ] ],
+    \   'right': [ [ 'lineinfo' ],
+    \              [ 'percent' ],
+    \              [ 'fileformat', 'fileencoding', 'spell', 'filetype', 'charvaluehex' ] ]
+    \ },
+    \ 'tabline': {
+    \   'left': [ ['buffers'] ],
+    \   'right': [ ['close'] ]
+    \ },
+    \ 'component_expand': {
+    \   'buffers': 'lightline#bufferline#buffers'
+    \ },
+    \ 'component_type': {
+    \   'buffers': 'tabsel'
+    \ },
+    \ 'component': {
+    \   'charvaluehex': '0x%B'
+    \ },
+    \ 'component_function': {
+    \   'gitbranch': 'FugitiveHead',
+    \   'filetype': 'MyFiletype',
+    \   'fileformat': 'MyFileformat',
+    \ },
+    \ }
 function! MyFiletype()
-	return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : 'no ft') : ''
 endfunction
 function! MyFileformat()
-	return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
+    return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
 " floaterm
 let g:floaterm_keymap_new = '<Leader>t'
@@ -415,21 +415,21 @@ let g:suda_smart_edit = 1
 " -----------------------------------------------------------------------------
 " PLUGINS with Plug
 " -----------------
-" PlugInstall  	Install plugins
-" PlugUpdate   	Install or update plugins
-" PlugClean[!] 	Remove unlisted plugins (bang version will clean without prompt)
-" PlugUpgrade  	Upgrade vim-plug itself
-" PlugStatus   	Check the status of plugins
-" PlugDiff     	Examine changes from the previous update and the pending changes
+" PlugInstall   Install plugins
+" PlugUpdate    Install or update plugins
+" PlugClean[!]  Remove unlisted plugins (bang version will clean without prompt)
+" PlugUpgrade   Upgrade vim-plug itself
+" PlugStatus    Check the status of plugins
+" PlugDiff      Examine changes from the previous update and the pending changes
 " PlugSnapshot[!] Generate script for restoring current snapshot of the plugins
 " Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
-	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-	\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 endif
 " Run PlugInstall if there are missing plugins
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-	\| PlugInstall --sync | source $MYVIMRC
+    \| PlugInstall --sync | source $MYVIMRC
 \| endif
 call plug#begin('~/.vim/plugged')
 " make sure that you have the latest version of the binary,

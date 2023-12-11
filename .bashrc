@@ -1,12 +1,12 @@
 ###############################################################################
-# Title:			.bashrc                                                   #
-# Description:		BASH-shell init-config file                               #
-# Usage:			source ~/.bashrc                                          #
-# Author:			Tomasz Rak                                                #
-# Email:			raktom0@gmail.com                                         #
-# Copyrights:		© 2020 Tomasz Rak                                         #
-# License:			BSD-2-Clause                                              #
-# Dependencies: 	bash                                                      #
+# Title:            .bashrc                                                   #
+# Description:      BASH-shell init-config file                               #
+# Usage:            source ~/.bashrc                                          #
+# Author:           Tomasz Rak                                                #
+# Email:            raktom0@gmail.com                                         #
+# Copyrights:       © 2020 Tomasz Rak                                         #
+# License:          BSD-2-Clause                                              #
+# Dependencies:     bash                                                      #
 # --------------------------------------------------------------------------- #
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -54,12 +54,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
     else
-	color_prompt=
+    color_prompt=
     fi
 fi
 
@@ -121,36 +121,36 @@ fi
 #PS1='\[\e[01;30m\]\t`if [ $? = 0 ]; then echo "\[\e[32m\] ✔ "; else echo "\[\e[31m\] ✘ "; fi`\[\e[00;35m\]\u\[\e[01;33m\]@\[\e[01;36m\]\h\[\e[01;37m\]:\[\e[01;34m\]\w`[[ $(git status 2> /dev/null) =~ Changes\ to\ be\ committed: ]] && echo "\[\e[33m\]" || echo "\[\e[31m\]"``[[ ! $(git status 2> /dev/null) =~ nothing\ to\ commit,\ working\ .+\ clean ]] || echo "\[\e[32m\]"`$(__git_ps1 "(%s)\[\e[00m\]")\[\e[00m\]\$ '
 # Colours in man pages
 man() {
-	env \
-	LESS_TERMCAP_mb=$(tput bold; tput setaf 6) \
-	LESS_TERMCAP_md=$(tput bold; tput setaf 6) \
-	LESS_TERMCAP_me=$(tput sgr0) \
-	LESS_TERMCAP_se=$(tput rmso; tput sgr0) \
-	LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \
-	LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 4) \
-	LESS_TERMCAP_mr=$(tput rev) \
-	LESS_TERMCAP_mh=$(tput dim) \
-	LESS_TERMCAP_ZN=$(tput ssubm) \
-	LESS_TERMCAP_ZV=$(tput rsubm) \
-	LESS_TERMCAP_ZO=$(tput ssupm) \
-	LESS_TERMCAP_ZW=$(tput rsupm) \
-	man "$@"
+    env \
+    LESS_TERMCAP_mb=$(tput bold; tput setaf 6) \
+    LESS_TERMCAP_md=$(tput bold; tput setaf 6) \
+    LESS_TERMCAP_me=$(tput sgr0) \
+    LESS_TERMCAP_se=$(tput rmso; tput sgr0) \
+    LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \
+    LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 4) \
+    LESS_TERMCAP_mr=$(tput rev) \
+    LESS_TERMCAP_mh=$(tput dim) \
+    LESS_TERMCAP_ZN=$(tput ssubm) \
+    LESS_TERMCAP_ZV=$(tput rsubm) \
+    LESS_TERMCAP_ZO=$(tput ssupm) \
+    LESS_TERMCAP_ZW=$(tput rsupm) \
+    man "$@"
 }
 # for better cd-ing option and function
 # cd without cd
 shopt -s autocd
 cd() {
-	if [ -n "$1" ]; then
-		builtin cd "$@"  && echo && exa -F --group-directories-first --color-scale --icons #&& echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
-	else
-		builtin cd ~  && echo && exa -F --group-directories-first --color-scale --icons #&& echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
-	fi
+    if [ -n "$1" ]; then
+        builtin cd "$@"  && echo && exa -F --group-directories-first --color-scale --icons #&& echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
+    else
+        builtin cd ~  && echo && exa -F --group-directories-first --color-scale --icons #&& echo -e "\nHey TOMASZ you are here--> \e[1;95m $(pwd)\e[m"
+    fi
 }
 # generate random password with given length
 genpasswd() {
-	local l=$1
-       	[ "$l" == "" ] && l=20
-      	tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
+    local l=$1
+        [ "$l" == "" ] && l=20
+        tr -dc A-Za-z0-9_ < /dev/urandom | head -c ${l} | xargs
 }
 # custom function for new scripts
 newscript() {
@@ -166,9 +166,9 @@ fi
 }
 
 gacp() {
-	git add .
-	git commit -m "$1"
-	git push
+    git add .
+    git commit -m "$1"
+    git push
 }
 
 # as argument put place for weather forecast
