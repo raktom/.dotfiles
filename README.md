@@ -1,27 +1,27 @@
 
 # .dotfiles
 ---
-
 ## My configuration files in bare repository.
 
-Environment:
-- gnome/bspwm
-- tilix/urxvt/alacritty
-- bash & readline-lib
-- tmux
-- vim/neovim
-- git
-- fzf & ag
-- bash-it, tldr, bat, exa, starship
-- neomutt, newsboat
-- pass, task, vimwiki, scripts
+Environment:  
+- gnome/bspwm  
+- tilix/urxvt/alacritty  
+- bash & readline-lib  
+- tmux  
+- vim/neovim  
+- NerdFonts, Calibri, Cambria, Georgia  
+- git  
+- fzf & ag  
+- bash-it, tldr, bat, exa, starship  
+- neomutt, newsboat  
+- pass, task, vimwiki, scripts  
 
-Tiling wm - bspwm includes:
-- bspwm
-- sxhkd
-- polybar
-- dmenu
-- dunst
+Tiling wm - bspwm includes:  
+- bspwm  
+- sxhkd  
+- polybar  
+- dmenu  
+- dunst  
 
  To clone into new machine:
 ```bash
