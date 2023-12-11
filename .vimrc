@@ -20,11 +20,12 @@ if has('persistent_undo')        "check if your vim version supports undo-tree
 	set undofile                 "turn on the feature
 	set undodir=$HOME/.vim/undo  "directory where the undo files will be stored
 endif
-set viminfo='100,n$HOME/.vim/info/viminfo "other info saved here
+"set viminfo='100,n$HOME/.vim/info/viminfo "other info saved here like reg
 " enable project specific vimrc
 "set exrc
 set path=.,**
 set termguicolors
+set background=dark
 set guifont="CaskaydiaCove Nerd Font 13"
 set encoding=UTF-8
 set spelllang=en,pl,de
@@ -58,14 +59,15 @@ set confirm
 set hidden
 set backspace=indent,eol,start
 set shiftwidth=4 tabstop=4
-au FileType html set sw=2 ts=2 et
 set expandtab
 set smarttab
 set showmatch
 set matchpairs+=<:>
+
 " normally y d c p use unnamed reg but 'unnamed' changes to * 'unnemedplus' to +
 " X puts selection to PRIMARY -> * and copy (^C) to CLIPBOARD -> +
 set clipboard^=unnamedplus
+
 "let g:fzf_buffers_jump = 1
 
 " run templates for empty files of some formats
@@ -84,7 +86,6 @@ set number relativenumber
 "set listchars=tab:\|\ ,space:·,nbsp:␣,trail:•,eol:¬,precedes:«,extends:»
 set listchars=tab:\|▸\ ,eol:↲,extends:❯,precedes:❮
 "set listchars=tab:→\ ,eol:↲
-set list
 set showbreak=↪
 highlight NonText ctermfg=Black guifg=#000000
 highlight SpecialKey ctermfg=Black guifg=#000000
@@ -162,8 +163,6 @@ inoremap `` ``<Left>
 " move paragraphwise and linewise
 noremap K     {
 noremap J     }
-noremap H     ^
-noremap L     $
 " move in insert mode
 inoremap <M-k> <Up>
 inoremap <M-j> <Down>
@@ -224,6 +223,21 @@ au CursorHoldI * stopinsert
 au InsertEnter * let updaterestore=&updatetime | set updatetime=7000
 au InsertLeave * let &updatetime=updaterestore
 
+" if bash is sh
+let bash_is_sh=1
+
+" change to directory of current file automatically
+autocmd BufEnter * lcd %:p:h
+
+" Put these in an autocmd group, so that we can delete them easily.
+augroup mysettings
+  au FileType xslt,xml,css,html,xhtml,javascript,sh,config,c,cpp,docbook set smartindent shiftwidth=2 softtabstop=2 expandtab
+  au FileType tex set wrap shiftwidth=2 softtabstop=2 expandtab
+
+  " Confirm to PEP8
+  au FileType python set tabstop=4 softtabstop=4 expandtab shiftwidth=4 cinwords=if,elif,else,for,while,try,except,finally,def,class
+augroup END
+
 " Netrw settings
 let g:netrw_banner = 0
 let g:netrw_browse_split = 4
@@ -265,12 +279,10 @@ function! NetrwMappings()
 	noremap <buffer> H :call OpenBelow()<CR>
 	noremap <buffer> T :call OpenTab()<CR>
 endfunction
-
 augroup netrw_mappings
 	autocmd!
 	autocmd filetype netrw call NetrwMappings()
 augroup END
-
 " Allow for netrw to be toggled
 function! ToggleNetrw()
 	if g:NetrwIsOpen
@@ -287,7 +299,6 @@ function! ToggleNetrw()
 		silent Lexplore
 	endif
 endfunction
-
 " Check before opening buffer on any file
 function! NetrwOnBufferOpen()
 	if exists('b:noNetrw')
@@ -295,10 +306,8 @@ function! NetrwOnBufferOpen()
 	endif
 	call ToggleNetrw()
 endfun
-
 " Close Netrw if it's the only buffer open
 autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&filetype") == "netrw" || &buftype == 'quickfix' |q|endif
-
 " Make netrw act like a project Draw
 augroup ProjectDrawer
 	autocmd!
@@ -309,7 +318,6 @@ augroup ProjectDrawer
 	autocmd VimEnter * :call NetrwOnBufferOpen()
 	autocmd VimEnter * :call ToggleNetrw()
 augroup END
-
 let g:NetrwIsOpen=0
 
 if &diff
@@ -345,23 +353,23 @@ let g:mkdp_browser = 'chromium'
 let g:mkdp_filetypes = ['markdown']
 
 " vimwiki settings
-let g:vimwiki_list = [{'path': '~/vimwiki', 
-    \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
 " makes vimwiki markdown links as [text](text.md) instead of [text](text)
 let g:vimwiki_markdown_link_ext = 1
 let g:vimwiki_global_ext = 0
 let g:vimwiki_markup_syntax = 'markdown'
 let g:markdown_folding = 1
+" ultisnips settings
 " use <Tab> to trigger autocompletion
 let g:UltiSnipsExpandTrigger="<C-J>"
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
 
-" loading the plugin devicon
+" devicons settings
 let g:webdevicons_enable = 1
 let g:lightline#bufferline#enable_devicons = 1
-
+" lightline settings
 let g:lightline = {
 	\ 'colorscheme': 'wombat',
 	\ 'active': {
@@ -396,22 +404,23 @@ endfunction
 function! MyFileformat()
 	return winwidth(0) > 70 ? (&fileformat . ' ' . WebDevIconsGetFileFormatSymbol()) : ''
 endfunction
-
+" floaterm
 let g:floaterm_keymap_new = '<Leader>t'
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
-" files which need privileges no problem
+" suda -files which need privileges no problem
 let g:suda_smart_edit = 1
 
+" -----------------------------------------------------------------------------
 " PLUGINS with Plug
-"
+" -----------------
 " PlugInstall  	Install plugins
 " PlugUpdate   	Install or update plugins
 " PlugClean[!] 	Remove unlisted plugins (bang version will clean without prompt)
 " PlugUpgrade  	Upgrade vim-plug itself
 " PlugStatus   	Check the status of plugins
 " PlugDiff     	Examine changes from the previous update and the pending changes
-" PlugSnapshot[!] Generate script for restoring the current snapshot of the plugins
+" PlugSnapshot[!] Generate script for restoring current snapshot of the plugins
 " Install vim-plug if not found
 if empty(glob('~/.vim/autoload/plug.vim'))
 	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -442,6 +451,8 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'dbeniamine/cheat.sh-vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+Plug 'nordtheme/vim'
 Plug 'morhetz/gruvbox'
 Plug 'tomasr/molokai'
 Plug 'sonph/onehalf', { 'rtp': 'vim' }
@@ -449,7 +460,16 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'lambdalisue/suda.vim'
 call plug#end()
 
-colorscheme gruvbox
+" fff -Vertical split (NERDtree style).
+let g:fff#split = "24vnew"
+let g:fff#split_direction = "nosplitbelow nosplitright"
+" material settings
+let g:material_terminal_italics = 1
+let g:material_theme_style = 'darker'
+let g:nord_italic = 1
+"let g:nord_italic_comments = 1
+let g:nord_underline = 1
+colorscheme nord
 " Dimming inactive(NC-not current) vim panes
 "highlight Normal ctermfg=145 ctermbg=none guifg=#cdcecf guibg=none " guibg=#192330
 highlight NormalNC guibg=#3d3e4a
