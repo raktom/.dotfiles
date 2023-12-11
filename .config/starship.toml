@@ -1,12 +1,13 @@
-##############################################################################
-#  ~/.config/starship.toml                                                   #
-##############################################################################
-#                                                                            #
-#  Starship-Prompt - config file                                             #
-#  ------------------------------------------------------------------------  #
-#  Author: Tomasz Rak                                                        #
-#                                                                            #
-##############################################################################
+###############################################################################
+# Title:            starship.toml                                             #
+# Description:      Starship-Prompt - config file                             #
+# Usage:            source ~/.config/starship.toml                            #
+# Author:           Tomasz Rak                                                #
+# Email:            raktom0@gmail.com                                         #
+# Copyrights:       © 2020 Tomasz Rak                                         #
+# License:          BSD-2-Clause                                              #
+# Dependencies:     starship                                                  #
+# --------------------------------------------------------------------------- #
 
 # Wait 10 milliseconds for starship to check files under the current directory.
 scan_timeout = 10
