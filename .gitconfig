@@ -17,4 +17,9 @@
     indentHeuristic = true
 [difftool "nvim"]
    cmd = "nvim -f -d -c \"wincmd l\" -c 'cd \"$GIT_PREFIX\"' \"$LOCAL\" \"$REMOTE\""
-
+[alias]
+    hist = log --pretty=format:'%C(magenta)%h%Creset %C(yellow)%ad%Creset | %s%C(red)%d%Creset %C(dim green)[%an]' --graph --date=short --abbrev-commit -30
+    s = status
+    co = checkout
+    cm = commit -m
+    br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
