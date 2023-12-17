@@ -23,6 +23,7 @@ Tiling wm - bspwm includes:
 - dmenu  
 - dunst  
 
+
  To clone into new machine:
 ```bash
 git clone --bare https://github.com/raktom/.dotfiles.git $HOME/.dotfiles.git
